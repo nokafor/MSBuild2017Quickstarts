@@ -124,7 +124,7 @@ First, we are going to edit the JavaScript code in **Home.js**.
 1. Double-click **Home.js** to open it in a code editor window.
 2. Replace the content of the entire file with the following snippet. Your Home.js should look like this: 
 
-	```javascript
+```javascript
 /// <reference path="/Scripts/FabricUI/MessageBanner.js" />
 
 
@@ -199,10 +199,9 @@ function onaddContentStartingSOW() {
         return ("iVBORw0KGgoAAAANSUhEUgAAAIAAAACABAMAAAAxEHz4AAAAJFBMVEX///9GRkZGRkZGRkZGRkZGRkZGRkZGRkYBpO9/ugDyUCL/uQGm4PjWAAAACHRSTlMBCQ0RFRknMx7uViEAAAB3SURBVGje7dcxCYBQGEXhi6izYBHB0RIiiAXkzW5iAMEKFnCwguVscJd/ecM5Ab79SNHK5FqlZXeNql/XIx23awMAAAAAAAAAAAAAAAAAyBwIvzNJxeyapLZ3Naou1ykNn6sDAAAAAAAAAAAAAAAAAMgcCL9ztB/UhshWs1l/WAAAAABJRU5ErkJggg==");
 
     }
+```
 
-	```
-	
-	This will create a starting document using Office Open XML (OOXML). The **addContentStartingSOW** function loads an OOXML fragment with the starting document and then writes that OOXML to the Word document using the **body.insertOoxml** method.
+This will create a starting document using Office Open XML (OOXML). The **addContentStartingSOW** function loads an OOXML fragment with the starting document and then writes that OOXML to the Word document using the **body.insertOoxml** method.
 	> Note that we've included helper functions at the bottom of the Home.js file to assist in loading the needed OOXML. 
 	
 3. Save your changes to **Home.js**. You will return to this source file after you have added your HTML layout to **Home.html**.
