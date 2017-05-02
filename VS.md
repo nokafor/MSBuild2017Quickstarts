@@ -17,9 +17,11 @@ Visual Studio
 
 	![](https://github.com/OfficeDev/hands-on-labs/blob/master/O3652/O3652-2%20Deep%20Dive%20in%20Office%20Word%20Add-ins/Images/StatementOfWorkManifest.PNG)
 
-4. In the Solution Explorer, double-click on the node named **StatementOfWorkManifest** to open the add-in manifest file in the Visual Studio editor. Browse through the file and note the different options you can set for your Add-in, such as provider, version, Display Name.
+## Part 2: Customize the Office Ribbon UI
 
-5. Now, find the XML block that looks like this. Take a minute and read through it as it describes how add-ins can integrate with the Office UI. The example below demonstrates how an add-in can add a button to the Word ribbon's Home tab using Add-in commands. 
+1. In the Solution Explorer, double-click on the node named **StatementOfWorkManifest** to open the add-in manifest file in the Visual Studio editor. Browse through the file and note the different options you can set for your Add-in, such as provider, version, Display Name.
+
+2. Now, find the XML block that looks like this. Take a minute and read through it as it describes how add-ins can integrate with the Office UI. The example below demonstrates how an add-in can add a button to the Word ribbon's Home tab using Add-in commands. 
 
 	```XML
         <!-- PrimaryCommandSurface==Main Office Ribbon. -->
@@ -65,27 +67,27 @@ Visual Studio
             </ExtensionPoint>
 	```
     
-5. Let's modify the button to say "Statement of Work" instead of "Show Taskpane". Find the following element in the file.
+3. Let's modify the button to say "Statement of Work" instead of "Show Taskpane". Find the following element in the file.
 
 	```XML
 		<Title resid="Contoso.TaskpaneButton.Label" />
 	```
 	This indicates that the label of the title is stored in a string resource named **Contoso.TaskpaneButton.Label**.
-6. Scroll down until you find the **ShortString** string resource with that label.
-7. Now, set the DefaultValue attribute to *Statement of Work*. Your XML should look like this: 
+4. Scroll down until you find the **ShortString** string resource with that label.
+5. Now, set the DefaultValue attribute to *Statement of Work*. Your XML should look like this: 
 
 	```XML
 		<bt:String id="Contoso.TaskpaneButton.Label" DefaultValue="Statement of Work" />
 	```
         
-8. Press *F5* (or click the "Start" button) to try your changes. If you're prompted to installed a self-signed certificate for localhost, accept the two dialogs. You should see you add-in deploy in Word and a button appear on the Home Tab. If you didn't change the label this is what you will see. 
+6. Press *F5* (or click the "Start" button) to try your changes. If you're prompted to installed a self-signed certificate for localhost, accept the two dialogs. You should see you add-in deploy in Word and a button appear on the Home Tab. If you didn't change the label this is what you will see. 
 
 	![Button on Ribbon](Images/Fig03.png)
 
 
-9. Switch back to Visual Studio and click the Stop Debugging button (or Shift+F5)
+7. Switch back to Visual Studio and click the Stop Debugging button (or Shift+F5)
 
-## Part 2: Understanding the Web Project files and preparing them for the lab.
+## Part 3: Understanding the Web Project files and preparing them for the lab.
 8. There are other 2 very important files that are part of this project that are on the root of the StatementOfWorkWeb project. One of them is the  **Home.html** page which is opened by default in Visual Studio and represents the add-in's starting page. If not already opened please double click on it, you will see some HTML that begins like this: 
 
 	````html
