@@ -1,24 +1,25 @@
-# Deep Dive into Office Word Add-ins (using 1.2 and 1.3 Requirement Sets)
-In this lab, you will get hands-on experience developing a Word add-in by using the 1.3 requirement set of the Word JavaScript API.
+# Build Your First Office Integration with Visual Studio
+Quick Start Challenge
+## Overview
+With Office Add-ins, you can add new functionality to Office and embed your rich and interactive content. In this walk through, you will get hands-on experience developing a Word add-in in Visual Studio. If you would instead like to create an add-in using our command-line tools, see [Building Your First Office Integration with Yo Office](Yo.md). 
 
-## Exercise 1:Creating the Statement of Work Wizard Add-in Project and Hello World!
-*In this exercise, you will create a new Office Add-in project in Visual Studio so that you can begin to write, test and debug a Word add-in. The user interface of the Office Add-in you will create in this lab will not be very complicated as it will just contain HTML buttons and JavaScript command handlers. You will also code your first  "Hello World!" sample!*
+## Tools You'll Use
+Visual Studio
 
-### Part 1: Create a basic Add-in
+## Part 1: Getting Started
 1. Launch Visual Studio 2015.
 2. From the **File** menu, select the **New Project** command. When the **New Project** dialog appears, select the Word Add-in under Web Add-ins in the **Office/SharePoint** template folder as shown below. Name the new project **StatementOfWork** and click **OK** to create the new project.
 
-	![](Images/Fig01.png)
+	![](https://github.com/OfficeDev/hands-on-labs/blob/master/O3652/O3652-2%20Deep%20Dive%20in%20Office%20Word%20Add-ins/Images/Fig01.png)
 
 
-5. Take a look at the structure of the new Visual Studio solution after it has been created. At a high-level, the new solution has been created using two Visual Studio projects named **StatementOfWork** and **StatementOfWorkWeb**. You should also observe that the top project contains a top-level manifest for the add-in named **StatementOfWorkManifest**, which contains a single file named **StatementOfWork.xml**.
+3. Take a look at the structure of the new Visual Studio solution after it has been created. At a high-level, the new solution has been created using two Visual Studio projects named **StatementOfWork** and **StatementOfWorkWeb**. You should also observe that the top project contains a top-level manifest for the add-in named **StatementOfWorkManifest**, which contains a single file named **StatementOfWork.xml**.
 
-	![](Images/StatementOfWorkManifest.PNG)
+	![](https://github.com/OfficeDev/hands-on-labs/blob/master/O3652/O3652-2%20Deep%20Dive%20in%20Office%20Word%20Add-ins/Images/StatementOfWorkManifest.PNG)
 
-6. In the Solution Explorer, double-click on the node named **StatementOfWorkManifest** to open the add-in manifest file in the Visual Studio editor.   
-7. Browse through the file and note the different options you can set for your Add-in, such as provider, version, Display Name.
+4. In the Solution Explorer, double-click on the node named **StatementOfWorkManifest** to open the add-in manifest file in the Visual Studio editor. Browse through the file and note the different options you can set for your Add-in, such as provider, version, Display Name.
 
-8. Now, find the XML block that looks like this. Take a minute and read through it as it describes how add-ins can integrate with the Office UI. The example below demonstrates how an add-in can add a button to the Word ribbon's Home tab using Add-in commands. 
+5. Now, find the XML block that looks like this. Take a minute and read through it as it describes how add-ins can integrate with the Office UI. The example below demonstrates how an add-in can add a button to the Word ribbon's Home tab using Add-in commands. 
 
 	```XML
         <!-- PrimaryCommandSurface==Main Office Ribbon. -->
@@ -64,7 +65,7 @@ In this lab, you will get hands-on experience developing a Word add-in by using 
             </ExtensionPoint>
 	```
     
-9. Let's modify the button to say "Statement of Work" instead of "Show Taskpane". Find the following element in the file.
+59. Let's modify the button to say "Statement of Work" instead of "Show Taskpane". Find the following element in the file.
 
 	```XML
 		<Title resid="Contoso.TaskpaneButton.Label" />
