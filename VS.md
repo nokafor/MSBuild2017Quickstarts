@@ -630,57 +630,6 @@ Word.run(function (ctx) {
 5. Congratulations! In this exercise you learned how to get content controls by its tag and replace their content! Let's continue with Exercise 6!
 
 
-## Exercise 6: Reusing content by inserting other Word documents!
-*In this exercise, you will continue working on the Visual Studio solution for the StatementOfWork add-in you created in the previous steps. You will extend the add-in's capabilities by adding JavaScript code to insert an existing Word (docx) file at the end of the current document. This exercise is cummulative and assumes you completed  Exercise 2.*
-
-1. A common scenario in Word development is reusing documents by  inserting them into new ones. In this exercise, we will add an existing Word File into a content control with a commonly used table of costs for the statement of work (reusing content from other documents). 
-
-2. Go back to Visual Studio, make sure you are using the StatementOfWord project.
-
-3. In the Solution Explorer, double click on **Home.js** to open this JavaScript file.
-4. Add the following code to the **onaddReuseContent** function:
-
-	````javascript
-function onaddReuseContent() {
- if (Office.context.requirements.isSetSupported("WordApi", "1.2")) { 
- // this functionality is included in the 1.2 requirement set, so we need to verify if it exists.
-            Word.run(function (context) {
-                var newParagraph = context.document.body.insertParagraph("Costs", "end");
-                newParagraph.style = "Heading 1";
-                context.document.body.insertParagraph("", "end");
-                var myBase64File = getDocumentAsBase64(); // gets a docx file as base64
-                context.document.body.insertFileFromBase64(myBase64File, "end");
-                return context.sync();
-            })
-             .catch(function (myError) {
-                 //otherwise we handle the exception here!
-                 showNotification("Error", myError.message);
-             })
-        }
-        else {
-            //if you reach this code it means that the Word executing this code does not yet support the 1.2 requirement set. In this case you can also insert a paragraph and then insert the document on the paragraph.
-
-            showNotification("Error. This functionality requires Word with at least January update!! (check  builds 6568+)");
-
-        }
-
-    } 
-	````
-	
-
-4. Note that the code is getting a sample docx file encoded as base64 (which is the format the insertFile method expects), then iterates each of the ocurrences and changes the content and the formatting information. Note that in the interest of time, the code is calling a method inserted on Exercise 2: **getDocumentAsBase64**  to simulate creating a base64 encoded based on an existing docx file.
-
-5. Test your work by pressing F5 to start a debug session and then click the **Step 1: Starting SOW** button. After the document gets inserted, try your code by clicking  on the  **Step 5: Reuse Content!** to insert the file at the end of the document. Now try your code by clicking on **Step 3: Search and Templetize!** and then **Step 4: Replace Customer!**. Each "Contoso" instance should be replaced with 'Fabrikam' and look like the following image:
-
-	![](Images/Fig17.png) 
-	
-
-5. Congratulations! In this exercise, you learned how to insert existing Word (docx) files into a document! Let's continue with Exercise 7!
-
-
-
-
-
 --
 
 That's it! Congratulations on creating your first Word add-in that __.
