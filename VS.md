@@ -87,10 +87,10 @@ Visual Studio
 
 7. Switch back to Visual Studio and click the Stop Debugging button (or Shift+F5)
 
-## Part 3: Understanding the Web Project files and preparing them for the lab.
-8. There are other 2 very important files that are part of this project that are on the root of the StatementOfWorkWeb project. One of them is the  **Home.html** page which is opened by default in Visual Studio and represents the add-in's starting page. If not already opened please double click on it, you will see some HTML that begins like this: 
+## Part 3: Insert content to document
+Now, let's move on to add functionality to the add-in. There are other 2 very important files that are part of this project that are on the root of the StatementOfWorkWeb project. One of them is the  **Home.html** page which is opened by default in Visual Studio and represents the add-in's starting page. If not already opened please double click on it, you will see some HTML that begins like this: 
 
-	````html
+	```html
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
@@ -115,11 +115,11 @@ Visual Studio
     <!-- link rel="stylesheet" href="/Content/fabric.min.css" -->
     <!-- link rel="stylesheet" href="/Content/fabric.components.min.css" -->
 </head>
-	````
+	```
 
 
 
-9. There are important references included in the **Home.html** head element. One for our Office.js library**<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js" type="text/javascript"></script>**, which enables the developer to interact with Word. There is also a reference to include  Office UI Fabric components, which are the styles you can use to make your add-in look great. Finally, there is also a reference to **Home.js** script on this page, which implements the logic of the add-in.
+9. There are important references included in the **Home.html** head element. One for our Office.js library **<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js" type="text/javascript"></script>**, which enables the developer to interact with Word. There is also a reference to include  Office UI Fabric components, which are the styles you can use to make your add-in look great. Finally, there is also a reference to **Home.js** script on this page, which implements the logic of the add-in.
  
 
 12. Lets examine the JavaScript code in **home.js**. Double-click **home.js** to open it in a code editor window.
