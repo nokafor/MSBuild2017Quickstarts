@@ -124,7 +124,7 @@ First, we are going to edit the JavaScript code in **Home.js**.
 1. Double-click **Home.js** to open it in a code editor window.
 2. Replace the content of the entire file with the following snippet. Your Home.js should look like this: 
 
-```javascript
+	```javascript
 /// <reference path="/Scripts/FabricUI/MessageBanner.js" />
 
 
@@ -200,7 +200,8 @@ function onaddContentStartingSOW() {
 
     }
 
-```
+	```
+	
 	This will create a starting document using Office Open XML (OOXML). The **addContentStartingSOW** function loads an OOXML fragment with the starting document and then writes that OOXML to the Word document using the **body.insertOoxml** method.
 	> Note that we've included helper functions at the bottom of the Home.js file to assist in loading the needed OOXML. 
 	
@@ -210,7 +211,7 @@ function onaddContentStartingSOW() {
 
 5. Update the **content-main** div within *Home.html* to match the following HTML layout, which adds a set of buttons to the add-in's layout. These are all the buttons you need for the lab.
 
-	```
+	```html
    <div id="content-main">
         <div id="sowPanel" class="padding">
             <button class="ms-Button ms-Button--compound" id="addContentStartingSOW">
