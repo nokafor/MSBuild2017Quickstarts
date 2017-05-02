@@ -344,7 +344,7 @@ Visual Studio
 
 30. You have now successfully run and tested the add-in and its JavaScript logic using the Visual Studio debugger. Close Microsoft Word to stop the debugging session and return to Visual Studio.
 
-## Exercise 2: Using OOXML to insert a starting Document
+## Part 4: Using OOXML to insert a starting Document
 
 *In this exercise, you will continue working on the Visual Studio solution for the StatementOfWork add-in you created in the previous exercise. You will add additional JavaScript code to create a starting document using Office Open XML (OOXML).*
  
