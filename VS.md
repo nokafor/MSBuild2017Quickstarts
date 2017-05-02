@@ -90,7 +90,7 @@ Visual Studio
 ## Part 3: Insert content to document
 Now, let's move on to add functionality to the add-in. There are other 2 very important files that are part of this project that are on the root of the StatementOfWorkWeb project. One of them is the  **Home.html** page which is opened by default in Visual Studio and represents the add-in's starting page. If not already opened please double click on it, you will see some HTML that begins like this: 
 
-	```
+```html
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
@@ -115,7 +115,7 @@ Now, let's move on to add functionality to the add-in. There are other 2 very im
     <!-- link rel="stylesheet" href="/Content/fabric.min.css" -->
     <!-- link rel="stylesheet" href="/Content/fabric.components.min.css" -->
 </head>
-	```
+```
 
 There are important references included in the **Home.html** head element. One for our Office.js library **<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js" type="text/javascript"></script>**, which enables the developer to interact with Word. There is also a reference to include  Office UI Fabric components, which are the styles you can use to make your add-in look great. Finally, there is also a reference to **Home.js** script on this page, which implements the logic of the add-in.
  
@@ -124,7 +124,7 @@ First, we are going to edit the JavaScript code in **Home.js**.
 1. Double-click **Home.js** to open it in a code editor window.
 2. Replace the content of the entire file with the following snippet. Your Home.js should look like this: 
 
-	```
+```javascript
 /// <reference path="/Scripts/FabricUI/MessageBanner.js" />
 
 
@@ -200,7 +200,7 @@ function onaddContentStartingSOW() {
 
     }
 
-	```
+```
 	This will create a starting document using Office Open XML (OOXML). The **addContentStartingSOW** function loads an OOXML fragment with the starting document and then writes that OOXML to the Word document using the **body.insertOoxml** method.
 	> Note that we've included helper functions at the bottom of the Home.js file to assist in loading the needed OOXML. 
 	
