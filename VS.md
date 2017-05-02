@@ -90,7 +90,7 @@ Visual Studio
 ## Part 3: Insert content to document
 Now, let's move on to add functionality to the add-in. There are other 2 very important files that are part of this project that are on the root of the StatementOfWorkWeb project. One of them is the  **Home.html** page which is opened by default in Visual Studio and represents the add-in's starting page. If not already opened please double click on it, you will see some HTML that begins like this: 
 
-	```html
+	```
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
@@ -117,160 +117,14 @@ Now, let's move on to add functionality to the add-in. There are other 2 very im
 </head>
 	```
 
-
-
-9. There are important references included in the **Home.html** head element. One for our Office.js library **<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js" type="text/javascript"></script>**, which enables the developer to interact with Word. There is also a reference to include  Office UI Fabric components, which are the styles you can use to make your add-in look great. Finally, there is also a reference to **Home.js** script on this page, which implements the logic of the add-in.
+There are important references included in the **Home.html** head element. One for our Office.js library **<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js" type="text/javascript"></script>**, which enables the developer to interact with Word. There is also a reference to include  Office UI Fabric components, which are the styles you can use to make your add-in look great. Finally, there is also a reference to **Home.js** script on this page, which implements the logic of the add-in.
  
+First, we are going to edit the JavaScript code in **Home.js**.
 
-12. Lets examine the JavaScript code in **home.js**. Double-click **home.js** to open it in a code editor window.
-13. Walk through the code in **Home.js**. It includes a simple example to highlight the largest word in the user selection. Note at the end of the file there is an **errorHandler** function we will reuse in the lab to handle errors, as well as a **showNotification** function to display messages from the lab.   
+1. Double-click **Home.js** to open it in a code editor window.
+2. Replace the content of the entire file with the following snippet. Your Home.js should look like this: 
 
-14. Lets clean up **Home.js** for our lab. Replace the content of the entire file with the following snippet. Your Home.js should look like this: 
-
-	````javascript
-/// <reference path="/Scripts/FabricUI/MessageBanner.js" />
-
-
-(function () {
-    "use strict";
-
-    var messageBanner;
-
-    // The initialize function must be run each time a new page is loaded.
-    Office.initialize = function (reason) {
-        $(document).ready(function () {
-            // Initialize the FabricUI notification mechanism and hide it
-            var element = document.querySelector('.ms-MessageBanner');
-            messageBanner = new fabric.MessageBanner(element);
-            messageBanner.hideBanner();
-
-            // Add event handlers here.....
-           
-        });
-    };
-
-
-    //$$(Helper function for treating errors, $loc_script_taskpane_home_js_comment34$)$$
-    function errorHandler(error) {
-        // $$(Always be sure to catch any accumulated errors that bubble up from the Word.run execution., $loc_script_taskpane_home_js_comment35$)$$
-        showNotification("Error:", error);
-        console.log("Error: " + error);
-        if (error instanceof OfficeExtension.Error) {
-            console.log("Debug info: " + JSON.stringify(error.debugInfo));
-        }
-    }
-
-    // Helper function for displaying notifications
-    function showNotification(header, content) {
-        $("#notificationHeader").text(header);
-        $("#notificationBody").text(content);
-        messageBanner.showBanner();
-        messageBanner.toggleExpansion();
-    }
-})();
-
-	````
-15. Save your changes to **Home.js**. You will return to this source file after you have added your HTML layout to **Home.html**.
-16. Now it's time to examine the HTML that has been added to the project to create the add-in's user interface. Double-click **Home.html** to open this file in a Visual Studio editor window. Examine the layout of HTML elements inside the **body** element. 
-
-
-18. Update the **content-main** div within *Home.html* to match the following HTML layout, which adds a set of buttons to the add-in's layout. These are all the buttons you need for the lab.
-
-	````html
-   <div id="content-main">
-        <div id="sowPanel" class="padding">
-            <button class="ms-Button ms-Button--compound" id="addContentHelloWorld">
-                <span class="ms-Button-label" id="button-text">Hello World!</span>
-                <span class="ms-Button-description" id="button-desc">Just a simple Hello World!! This code writes the famous string.</span>
-            </button><br><br>
-
-            <button class="ms-Button ms-Button--compound" id="addContentStartingSOW">
-                <span class="ms-Button-label" id="button-text">Step 1: Starting SOW</span>
-                <span class="ms-Button-description" id="button-desc">Insert a starting document to play with. uses OOXML</span>
-            </button><br><br>
-
-            <button class="ms-Button ms-Button--compound" id="addPicture">
-                <span class="ms-Button-label" id="button-text">Step 2: Fix Picture!</span>
-                <span class="ms-Button-description" id="button-desc">How to insert or replace images in a document.</span>
-            </button><br><br>
-
-            <button class="ms-Button ms-Button--compound" id="addSearchAndTempletize">
-                <span class="ms-Button-label" id="button-text">Step 3: Search and Templetize!</span>
-                <span class="ms-Button-description" id="button-desc">Search for 'Contoso' and insert content controls to hold the customer name. </span>
-            </button><br><br>
-
-            <button class="ms-Button ms-Button--compound" id="addChangeCustomer">
-                <span class="ms-Button-label" id="button-text">Step 4: Replace Customer!</span>
-                <span class="ms-Button-description" id="button-desc">Set the customer name to 'Fabrikam' using content controls.</span>
-            </button><br><br>
-
-            <button class="ms-Button ms-Button--compound" id="addReuseContent">
-                <span class="ms-Button-label" id="button-text">Step 5: Reuse Content!</span>
-                <span class="ms-Button-description" id="button-desc">Reuse content by merging in another document</span>
-            </button><br><br>
-
-            <button class="ms-Button ms-Button--compound" id="addHighlights">
-                <span class="ms-Button-label" id="button-text">Step 6: Highlight Word by Word!</span>
-                <span class="ms-Button-description" id="button-desc">Shows how to get (as range) word by word of a paragraph.</span>
-            </button><br><br>
-
-            <button class="ms-Button ms-Button--compound" id="addOpenDoc">
-                <span class="ms-Button-label" id="button-text">Step 7: Create a New Document!</span>
-                <span class="ms-Button-description" id="button-desc">This samples shows how to create and open a new document.</span>
-            </button><br><br>
-
-
-        </div>
-	````
-
-19. Save and close **Home.html**.
-
-22. Lets try the add-in one more time to see the progress. Press the **{F5}** key to run the project in the Visual Studio debugger. The debugger should launch Word 2016. NOTE: Once Word opens, make sure you launch your add-in by clicking on the **Show Taskpane** button on the ribbon. (and make sure to repeat this operation each time you F5)
-
-23. After you click on this button you should see your Office Add-in in the task pane on the right side of a new Word document, as shown in the following screenshot.
-
-	![](Images/Fig07.png)
-
-23. Close Word to terminate your debugging session and return to Visual Studio.
-24. Return to the source file named **Home.js** or open it if it is not already open.
-25. Create a function named **onaddContentHelloWorld** and add the following call to **body.insertText**. This method is replacing the entire body of the document with the "Hello World!" string (note that instead of "replace" the method can also insert at the "start" or "end" of the body). Also add a handler for success and error.
-
-	````javascript
-  function onaddContentHelloWorld() {
-        // Hello World in the Word.js world!
-        Word.run(function (context) {
-            //this line replaces the body of the document with a friendly "Hello World!!!"
-            context.document.body.insertText("Hello World!", "replace");
-            return context.sync()
-
-        }).then(function () {
-            // if evertything was succesful, we sent an ok...
-            showNotification("Task Complete!");
-        })
-          .catch(function (myError) {
-              //otherwise we handle the exception here!
-              showNotification("Error", myError.message);
-          });
-    }
-	````
-
-26. Finally, add a line of jQuery code into the add-in initialization logic to bind the click event of the **addContentHelloWorld** button to the **onaddContentHelloWorld** function (after the // Add event handlers here comment).
-
-	````javascript
-	Office.initialize = function (reason) {
-		$(document).ready(function () {
-		var element = document.querySelector('.ms-MessageBanner');
-                messageBanner = new fabric.MessageBanner(element);
-                messageBanner.hideBanner();
-            // Add event handlers here....
-            $('#addContentHelloWorld').click(onaddContentHelloWorld);
-		});
-	};
-	````
-
-27. When you are done, the **Home.js** file should match the following listing.
-
-	````javascript
+	```
 /// <reference path="/Scripts/FabricUI/MessageBanner.js" />
 
 
@@ -288,135 +142,10 @@ Now, let's move on to add functionality to the add-in. There are other 2 very im
             messageBanner.hideBanner();
 
             // Add event handlers here....
-            $('#addContentHelloWorld').click(onaddContentHelloWorld);
-
-     
+            $('#addContentStartingSOW').click(onaddContentStartingSOW);         
         });
     };
 
-  function onaddContentHelloWorld() {
-        // Hello World in the Word.js world!
-        Word.run(function (context) {
-            //this line replaces the body of the document with a friendly "Hello World!!!"
-            context.document.body.insertText("Hello World!", "replace");
-            return context.sync()
-
-        }).then(function () {
-            // if evertything was succesful, we sent an ok...
-            showNotification("Task Complete!");
-        })
-          .catch(function (myError) {
-              //otherwise we handle the exception here!
-              showNotification("Error", myError.message);
-          });
-    }
-
-    //$$(Helper function for treating errors, $loc_script_taskpane_home_js_comment34$)$$
-    function errorHandler(error) {
-        // $$(Always be sure to catch any accumulated errors that bubble up from the Word.run execution., $loc_script_taskpane_home_js_comment35$)$$
-        showNotification("Error:", error);
-        console.log("Error: " + error);
-        if (error instanceof OfficeExtension.Error) {
-            console.log("Debug info: " + JSON.stringify(error.debugInfo));
-        }
-    }
-
-    // Helper function for displaying notifications
-    function showNotification(header, content) {
-        $("#notificationHeader").text(header);
-        $("#notificationBody").text(content);
-        messageBanner.showBanner();
-        messageBanner.toggleExpansion();
-    }
-
-
-
-
-
-
-})();
-	````
-
-28. Save your changes to **Home.js**.
-29. Now test the functionality of the add-in. Press the **{F5}** key to begin a debugging session and after inserting the TaskPane  click the **Hello World** button. You should see that "Hello World" has been added into the cursor position of the Word document.
-
-	![](Images/Fig08.png)
-
-30. You have now successfully run and tested the add-in and its JavaScript logic using the Visual Studio debugger. Close Microsoft Word to stop the debugging session and return to Visual Studio.
-
-## Part 4: Using OOXML to insert a starting Document
-
-*In this exercise, you will continue working on the Visual Studio solution for the StatementOfWork add-in you created in the previous exercise. You will add additional JavaScript code to create a starting document using Office Open XML (OOXML).*
- 
-1. In Visual Studio, make sure you have the **StatementOfWork** project open.
-2. In the Solution Explorer, double click on **Home.js** to open this JavaScript file in an editor window. 
-3. Just below the **onaddContentHelloWorld** function, add seven new functions named **onaddContentStartingSOW**, **onFixPicture**, **onSearchAndTempletize**, **onaddChangeCustomer**, **onaddReuseContent**, **onaddHighlights** and **onaddOpenDoc**.
-
-	````javascript
- function onaddContentHelloWorld() {
-        // Hello World in the Word.js world!
-        Word.run(function (context) {
-            //this line replaces the body of the document with a friendly "Hello World!!!"
-            context.document.body.insertText("Hello World!", "replace");
-            return context.sync()
-
-        }).then(function () {
-            // if everything was succesful, we sent an ok...
-            showNotification("Task Complete!");
-        })
-          .catch(function (myError) {
-              //otherwise we handle the exception here!
-              showNotification("Error", myError.message);
-          });
-    }
-
-    function onaddContentStartingSOW() {
-    }
-    function onFixPicture() {
-    }
-    function onSearchAndTempletize() {
-    } 
-    
-    function onaddChangeCustomer() {
-    }
-    function onaddReuseContent() {
-    }
-
-    function onaddHighlights() {
-    }
-
-    function onaddOpenDoc() {
-    } 
-	````
-
-4. Go back to Office.initialize and provide the handlers for each button **click** event associating the buttons with the corresponding newly created functions.
-   
-	````javascript
-	 Office.initialize = function (reason) {
-        $(document).ready(function () {
-            // Initialize the FabricUI notification mechanism and hide it
-            var element = document.querySelector('.ms-MessageBanner');
-            messageBanner = new fabric.MessageBanner(element);
-            messageBanner.hideBanner();
-
-
-            // Add event handlers here....
-            $('#addContentHelloWorld').click(onaddContentHelloWorld);
-            $('#addContentStartingSOW').click(onaddContentStartingSOW);
-            $('#addPicture').click(onFixPicture);
-            $('#addSearchAndTempletize').click(onSearchAndTempletize);
-            $('#addChangeCustomer').click(onaddChangeCustomer);
-            $('#addReuseContent').click(onaddReuseContent);
-            $('#addHighlights').click(onaddHighlights);
-            $('#addOpenDoc').click(onaddOpenDoc);
-     
-        });
-	    };
-	````
-
-5. Implement the **addContentStartingSOW** function to load the OOXML fragment with the starting document and then to write that OOXML to the Word document using the **body.insertOoxml** method by  using the code in the following listing. Note that there is  **getOOXMLForTemplate()** is a helping function used to load the needed  OOXML. 
-
-	````javascript
 function onaddContentStartingSOW() {
         Word.run(function (context) {
             // first lets get a pointer to the document body ....
@@ -436,9 +165,26 @@ function onaddContentStartingSOW() {
           });
     }
     
-	````
-5.1  Add the helper functions needed for the lab at the end of the **Home.js** page:
-	````javascript
+
+    //$$(Helper function for treating errors, $loc_script_taskpane_home_js_comment34$)$$
+    function errorHandler(error) {
+        // $$(Always be sure to catch any accumulated errors that bubble up from the Word.run execution., $loc_script_taskpane_home_js_comment35$)$$
+        showNotification("Error:", error);
+        console.log("Error: " + error);
+        if (error instanceof OfficeExtension.Error) {
+            console.log("Debug info: " + JSON.stringify(error.debugInfo));
+        }
+    }
+
+    // Helper function for displaying notifications
+    function showNotification(header, content) {
+        $("#notificationHeader").text(header);
+        $("#notificationBody").text(content);
+        messageBanner.showBanner();
+        messageBanner.toggleExpansion();
+    }
+})();
+
  //helper methods
 
     function getOOXMLForTemplate() {
@@ -453,17 +199,58 @@ function onaddContentStartingSOW() {
         return ("iVBORw0KGgoAAAANSUhEUgAAAIAAAACABAMAAAAxEHz4AAAAJFBMVEX///9GRkZGRkZGRkZGRkZGRkZGRkZGRkYBpO9/ugDyUCL/uQGm4PjWAAAACHRSTlMBCQ0RFRknMx7uViEAAAB3SURBVGje7dcxCYBQGEXhi6izYBHB0RIiiAXkzW5iAMEKFnCwguVscJd/ecM5Ab79SNHK5FqlZXeNql/XIx23awMAAAAAAAAAAAAAAAAAyBwIvzNJxeyapLZ3Naou1ykNn6sDAAAAAAAAAAAAAAAAAMgcCL9ztB/UhshWs1l/WAAAAABJRU5ErkJggg==");
 
     }
-   
-	````
 
-6. Test your work by pressing F5 to start a debug session and then click the **Step 1: Starting SOW** button. When you click the button, you should see that the starting Statement of Work  has been added to the Word document.
+	```
+	This will create a starting document using Office Open XML (OOXML). The **addContentStartingSOW** function loads an OOXML fragment with the starting document and then writes that OOXML to the Word document using the **body.insertOoxml** method.
+	> Note that we've included helper functions at the bottom of the Home.js file to assist in loading the needed OOXML. 
+	
+3. Save your changes to **Home.js**. You will return to this source file after you have added your HTML layout to **Home.html**.
+4. Now it's time to examine the HTML that has been added to the project to create the add-in's user interface. Double-click **Home.html** to open this file in a Visual Studio editor window. 
 
-	![](Images/Fig09.png)
+
+5. Update the **content-main** div within *Home.html* to match the following HTML layout, which adds a set of buttons to the add-in's layout. These are all the buttons you need for the lab.
+
+	```
+   <div id="content-main">
+        <div id="sowPanel" class="padding">
+            <button class="ms-Button ms-Button--compound" id="addContentStartingSOW">
+                <span class="ms-Button-label" id="button-text">Step 1: Starting SOW</span>
+                <span class="ms-Button-description" id="button-desc">Insert a starting document to play with. uses OOXML</span>
+            </button><br><br>
+
+            <button class="ms-Button ms-Button--compound" id="addPicture">
+                <span class="ms-Button-label" id="button-text">Step 2: Fix Picture!</span>
+                <span class="ms-Button-description" id="button-desc">How to insert or replace images in a document.</span>
+            </button><br><br>
+
+            <button class="ms-Button ms-Button--compound" id="addSearchAndTempletize">
+                <span class="ms-Button-label" id="button-text">Step 3: Search and Templetize!</span>
+                <span class="ms-Button-description" id="button-desc">Search for 'Contoso' and insert content controls to hold the customer name. </span>
+            </button><br><br>
+
+            <button class="ms-Button ms-Button--compound" id="addChangeCustomer">
+                <span class="ms-Button-label" id="button-text">Step 4: Replace Customer!</span>
+                <span class="ms-Button-description" id="button-desc">Set the customer name to 'Fabrikam' using content controls.</span>
+            </button><br><br>
+        </div>
+	```
+
+6. Save and close **Home.html**.
+
+7. Lets try the add-in one more time to see the progress. Press the **{F5}** key to run the project in the Visual Studio debugger. The debugger should launch Word 2016. NOTE: Once Word opens, make sure you launch your add-in by clicking on the **Show Taskpane** button on the ribbon. You will have to repeat this operation each time you hit F5. 
+
+8. After you click on this button you should see your Office Add-in in the task pane on the right side of a new Word document, as shown in the following screenshot.
+
+	![Add-in Template Screenshot](Images/Fig07.png)
+
+9. Click the **Step 1: Starting SOW** button. When you click the button, you should see that the starting Statement of Work has been added to the Word document.
+
+	![Starting Statement of Work](Images/Fig09.png)
+	
+	Don't feel overhelmed with the OOXML file you inserted; if you want to master how to handle OOXML we recommend you to read the article at **msdn.microsoft.com/en-us/library/office/dn423225.aspx** article.Close Word to terminate your debugging session and return to Visual Studio.
 	
 
-7. You have now finished Exercise 2 and it is time to move on to Exercise 3. Don't feel overhelmed with the OOXML file you inserted; if you want to master how to handle OOXML we recommend you to read the article at **msdn.microsoft.com/en-us/library/office/dn423225.aspx** article.
-
-## Exercise 3: Learning how to handle inline Pictures in Word by replacing an existing image in the document.
+## Part 4: Learning how to handle inline Pictures in Word by replacing an existing image in the document.
 *In this exercise you will continue working on the Visual Studio solution for the StatementOfWork add-in you created on in the previous exercise. You will extend the add-in's capabilities by adding JavaScript code to replace an image in the  active Word document by using the inlinePicture object members. This exercise is cummulative and assumes you completed Exercise 2.*
 
 1. Please note how the inserted SOW has a badly formatted picture **highlighted in red below**. This is intentional and you will fix this image in this exercise.
