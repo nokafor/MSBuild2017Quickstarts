@@ -57,7 +57,7 @@ Visual Studio
                     <Action xsi:type="ShowTaskpane">
                         <TaskpaneId>ButtonId1</TaskpaneId>
                         <!-- Provide a url resource id for the location that will be displayed on the task pane. -->
-                        <SourceLocation resid="Contoso.Taskpane.Url" />
+                         <SourceLocation resid="Contoso.Taskpane.Url" />
                     </Action>
                     </Control>
                 </Group>
@@ -65,27 +65,27 @@ Visual Studio
             </ExtensionPoint>
 	```
     
-59. Let's modify the button to say "Statement of Work" instead of "Show Taskpane". Find the following element in the file.
+5. Let's modify the button to say "Statement of Work" instead of "Show Taskpane". Find the following element in the file.
 
 	```XML
 		<Title resid="Contoso.TaskpaneButton.Label" />
 	```
-10. This indicates that the label of the title is stored in a string resource named **Contoso.TaskpaneButton.Label**.
-11. Scroll down until you find the **ShortString** string resource with that label.
-12. (Optional)Now, set the DefaultValue attribute to *Statement of Work*. Your XML should look like this: 
+	This indicates that the label of the title is stored in a string resource named **Contoso.TaskpaneButton.Label**.
+6. Scroll down until you find the **ShortString** string resource with that label.
+7. Now, set the DefaultValue attribute to *Statement of Work*. Your XML should look like this: 
 
 	```XML
 		<bt:String id="Contoso.TaskpaneButton.Label" DefaultValue="Statement of Work" />
 	```
         
-13. Press *F5* (or click the "Start" button) to try your changes. If you're prompted to installed a self-signed certificate for localhost, accept the two dialogs. You should see you add-in deploy in Word and a button appear on the Home Tab. If you didn't change the label this is what you will see. 
+8. Press *F5* (or click the "Start" button) to try your changes. If you're prompted to installed a self-signed certificate for localhost, accept the two dialogs. You should see you add-in deploy in Word and a button appear on the Home Tab. If you didn't change the label this is what you will see. 
 
 	![Button on Ribbon](Images/Fig03.png)
 
-14. If you did change the label you should see the label you provided. However don't worry if you don't see the label updated, this is a known issue with this build. 
-15. Switch back to Visual Studio and click the Stop Debugging button (or Shift+F5)
 
-###Part 2: Understanding the Web Project files and preparing them for the lab.
+9. Switch back to Visual Studio and click the Stop Debugging button (or Shift+F5)
+
+## Part 2: Understanding the Web Project files and preparing them for the lab.
 8. There are other 2 very important files that are part of this project that are on the root of the StatementOfWorkWeb project. One of them is the  **Home.html** page which is opened by default in Visual Studio and represents the add-in's starting page. If not already opened please double click on it, you will see some HTML that begins like this: 
 
 	````html
