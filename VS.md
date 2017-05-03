@@ -142,14 +142,10 @@ First, we are going to edit the JavaScript code in **Home.js**.
             messageBanner.hideBanner();
 
             // Add event handlers here....
-            $('#addContentHelloWorld').click(onaddContentHelloWorld);
             $('#addContentStartingSOW').click(onaddContentStartingSOW);
             $('#addPicture').click(onFixPicture);
             $('#addSearchAndTempletize').click(onSearchAndTempletize);
-            $('#addChangeCustomer').click(onaddChangeCustomer);
-            $('#addReuseContent').click(onaddReuseContent);
-            $('#addHighlights').click(onaddHighlights);
-            $('#addOpenDoc').click(onaddOpenDoc);    
+            $('#addChangeCustomer').click(onaddChangeCustomer);   
         });
     };
 
@@ -162,14 +158,6 @@ First, we are going to edit the JavaScript code in **Home.js**.
     
     function onaddChangeCustomer() {
     }
-    function onaddReuseContent() {
-    }
-
-    function onaddHighlights() {
-    }
-
-    function onaddOpenDoc() {
-    } 
     
 
     //$$(Helper function for treating errors, $loc_script_taskpane_home_js_comment34$)$$
@@ -261,7 +249,10 @@ Your final Home.js file should look as follows:
             messageBanner.hideBanner();
 
             // Add event handlers here....
-            $('#addContentStartingSOW').click(onaddContentStartingSOW);         
+            $('#addContentStartingSOW').click(onaddContentStartingSOW);
+            $('#addPicture').click(onFixPicture);
+            $('#addSearchAndTempletize').click(onSearchAndTempletize);
+            $('#addChangeCustomer').click(onaddChangeCustomer);     
         });
     };
 
@@ -282,6 +273,13 @@ function onaddContentStartingSOW() {
               //otherwise we handle the exception here!
               showNotification("Error", myError.message);
           });
+    }
+    function onFixPicture() {
+    }
+    function onSearchAndTempletize() {
+    } 
+    
+    function onaddChangeCustomer() {
     }
     
 
