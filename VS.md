@@ -192,7 +192,8 @@ First, we are going to edit the JavaScript code in **Home.js**.
 })();
 
 ```
-	This will create a scaffold for the functionality you will continue to develop through this walkthrough.
+
+This will create a scaffold for the functionality you will continue to develop through this walkthrough.
 	
 3. Next, let's add the logic to insert content into the document. Add the following code to the **onaddContentStartingSOW**.
 
@@ -421,16 +422,15 @@ Note that the code is checking if the host (Word) actually supports the 1.2 requ
 
 
 ## Part 5: Search and insert Content Controls
-*In this exercise, you will continue working on the Visual Studio solution for the StatementOfWork add-in you created on in the previous steps. You will extend the add-in's capabilities by adding JavaScript code to search for content in the document and add content controls. Content controls are a key building block in Word development and using them enables developers to insert 'placeholders' in the document that can be later identified and replaced with different content. This exercise is cummulative and assumes you completed  Exercise 2.*
 
-1. A common scenario in Word development is reusing documents to create new ones. A "Statement of Work" (SOW) is a very good example of this. By replacing a few fields, an existing SOW may be a completely new SOW instance. To illustrate that point, we will implement a simple example of how a template can be created. 
+A common scenario in Word development is reusing documents to create new ones. A "Statement of Work" (SOW) is a very good example of this. By replacing a few fields, an existing SOW may be a completely new SOW instance. This is done through Content Controls. Content controls are a key building block in Word development and using them enables developers to insert 'placeholders' in the document that can be later identified and replaced with different content.
 
-2. Go back to Visual Studio, make sure you are using the StatementOfWord project.
+To illustrate that point, we will implement a simple example of how a template can be created. Then, we will replace the content of all content controls tagged as 'customer' with 'Fabrikam'. Note that this could very well come from data stored in an external system, like a CRM, ERP, etc. The idea is to generate a new instance of a document with a new customer.
 
-3. In the Solution Explorer, double-click on **Home.js** to open this JavaScript file.
-4. Add the following code to the **onSearchAndTempletize** function:
+1. Go back to Visual Studio, and in the Solution Explorer, double-click on **Home.js** to open this JavaScript file.
+2. Add the following code to the **onSearchAndTempletize** function:
 
-	````javascript
+```javascript
 function onSearchAndTempletize() {
         // on this method I actually want to create kind of a template. Will start by searching "Contoso". Then I will wrap each instance with a content control
         // I will also change the format of each search instance...
@@ -462,43 +462,31 @@ function onSearchAndTempletize() {
 
 
     } 
-	````
+```
+	
+Note that the code is searching for "Contoso". The search method returns a collection of ranges matching the search criteria. The code iterates through that collection and wraps each instance with a content control. It is also important to note that you are adding to each content control a tag with a "customer" title. This is important as we will use this information to replace the content of all the content controls with this tag with a new customer's name.  
+
+3. Test your work by pressing F5 to start a debug session and then click the **Step 1: Starting SOW** button. After the starting document gets inserted, click on the  **Step 3: Search and Templetize!** button to try your code. Each "Contoso" instance should be wrapped with a content control and with a yellow highlight. For visibility purposes we are also adding a red font color and yellow highlight to each search result instance. Your document should look like this after you click on the Step 1 and Step 3 buttons:
+
+
+	![SOW Template](Images/Fig13.png) 
 	
 
-4. Note that the code is searching for "Contoso". The search method returns a collection of ranges matching the search criteria. The code iterates through that collection and wraps each instance with a content control. Note that you are adding to each content control a tag with a "customer" title. This is important as we will use this information in the next exercise to replace the content of all the content controls with this tag with a new customer's name.  
 
-5. Test your work by pressing F5 to start a debug session and then click the **Step 1: Starting SOW** button. After the starting document gets inserted, click on the  **Step 3: Search and Templetize!** button to try your code. Each "Contoso" instance should be wrapped with a content control and with a yellow highlight. For visibility purposes we are also adding a red font color and yellow highlight to each search result instance. Your document should look like this after you click on the Step 1 and Step 3 buttons:
-
-
-	![](Images/Fig13.png) 
-	
-
-
-9. Make sure to select any of the 'Contoso' search instances and verify they were tagged as 'customer'. To check this make sure that the Developer tab in the Word ribbon is activated. Go to File->Options->Customize Ribbon  and make sure in the right panel that 'Developer' is selected.
+4. Make sure to select any of the 'Contoso' search instances and verify they were tagged as 'customer'. To check this make sure that the Developer tab in the Word ribbon is activated. Go to File->Options->Customize Ribbon  and make sure in the right panel that 'Developer' is selected.
 
 	![](Images/Fig14.png) 
 
 
-10. Then, while having the cursor within any 'Contoso' instance, click on the Developer tab and then on 'Properties'. You will see each content control has the 'customer' tag.
+5. Then, while having the cursor within any 'Contoso' instance, click on the Developer tab and then on 'Properties'. You will see each content control has the 'customer' tag.
 
 	![](Images/Fig15.png) 
 
+6. Go back to the **Home.js** file in Visual Studio, make sure you are using the StatementOfWord project.
 
-5. Congratulations! In this exercise you learned how to use the search API and how to insert and tagged content controls, as well as changing formatting attributes. Let's continue with Exercise 5!
+7. Add the following code to the **onaddChangeCustomer** function:
 
-
-
-## Exercise 5: Changing content of tagged Content Controls!
-*In this exercise, you will continue working on the Visual Studio solution for the StatementOfWork add-in you created in the previous steps. You will extend the add-in's capabilities by adding JavaScript code to replace content in tagged content controls. Content controls are a key building block in Word development and enable developers to insert 'placeholders' in the document that can be later identified and replaced with different content. This exercise is cummulative and assumes you completed  Exercises 2 and 4.*
-
-1. A common scenario in Word development is reusing documents to create new ones. A "Statement of Work" (SOW) is a very good example of this. By replacing a few fields an existing SOW may be a completely new SOW instance. To illustrate that point, now that we have created a template in the previous exercise, we will replace the content of all content controls tagged as 'customer' with 'Fabrikam'. Note that this could very well come from data stored in an external system, like a CRM, ERP, etc. The idea is to generate a new instance of a document with a new customer. 
-
-2. Go back to Visual Studio, make sure you are using the StatementOfWord project.
-
-3. In the Solution Explorer, double click on **Home.js** to open this JavaScript file.
-4. Add the following code to the **onaddChangeCustomer** function:
-
-	````javascript
+```javascript
 function onaddChangeCustomer() {
 Word.run(function (ctx) {
             var ccs = ctx.document.contentControls.getByTag("customer");
@@ -518,19 +506,14 @@ Word.run(function (ctx) {
 
 
     } 
-	````
+```
+
+Note that the code is first getting all the content controls tagged as 'customer', then iterates each of the ocurrences and changes the content and the formatting information.
+
+8. Test your work by pressing F5 to start a debug session and then click the **Step 1: Starting SOW** button. After the document gets inserted, click on the  **Step 3: Search and Templetize!** to create a template. Now try your code by clicking on **Step 4: Replace Customer!** Each "Contoso" instance should be replaced with 'Fabrikam' and look like the following image:
+
+	![Final add-in result](Images/Fig16.png) 
 	
-
-4. Note that the code is first getting all the content controls tagged as 'customer', then iterates each of the ocurrences and changes the content and the formatting information.
-
-5. Test your work by pressing F5 to start a debug session and then click the **Step 1: Starting SOW** button. After the document gets inserted, click on the  **Step 3: Search and Templetize!** to create a template. Now try your code by clicking on **Step 4: Replace Customer!** Each "Contoso" instance should be replaced with 'Fabrikam' and look like the following image:
-
-	![](Images/Fig16.png) 
-	
-
-5. Congratulations! In this exercise you learned how to get content controls by its tag and replace their content! Let's continue with Exercise 6!
-
-
 --
 
 That's it! Congratulations on creating your first Word add-in that __.
