@@ -39,6 +39,7 @@ Visual Studio Code
 	 # Run Yo Office
 	 yo office
 	 ```
+	 
 	 On first launch, you may be prompted to anonymously report usage statistics. This allows the Yeoman team to continue to improve the platform and allow us to deliver the best services. We recommend allowing your data to be collected, but if you don’t feel comfortable sharing your data, feel free to decline. Once past this, Yo Office will launch and prompt you with the following questions: 
   
 	  |Question|Answer|
