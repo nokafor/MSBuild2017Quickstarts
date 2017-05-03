@@ -1,7 +1,7 @@
 # Build Your First Office Integration with Visual Studio
 
 ## Overview
-With Office Add-ins, you can add new functionality to Office and embed your rich and interactive content. In this walk through, you will get hands-on experience developing a Word add-in in Visual Studio. If you would instead like to create an add-in using our command-line tools, see [Building Your First Office Integration with Yo Office](Yo.md). 
+With Office Add-ins, you can add new functionality to Office and embed your rich and interactive content. In this walk through, you will get hands-on experience developing a Word add-in with Visual Studio. If you would instead like to create an add-in using our command-line tools, see [Building Your First Office Integration with Yo Office](Yo.md). 
 
 ## Tools You'll Use
 Visual Studio
