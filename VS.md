@@ -88,7 +88,7 @@ Visual Studio
 7. Switch back to Visual Studio and click the Stop Debugging button (or Shift+F5)
 
 ## Part 3: Insert content to document
-Now, let's move on to add functionality to the add-in. There are other 2 very important files that are part of this project that are on the root of the StatementOfWorkWeb project. One of them is the  **Home.html** page which is opened by default in Visual Studio and represents the add-in's starting page. If not already opened please double click on it, you will see some HTML that begins like this: 
+Now, let's move on to add functionality to the add-in. There are two very important files that are in the root of the StatementOfWorkWeb project. One of them is the  **Home.html** page which is opened by default in Visual Studio and represents the add-in's starting page. If not already opened please double click on it, you will see some HTML that begins like this: 
 
 ```html
 <head>
