@@ -14,7 +14,7 @@ Visual Studio Code
 
 1.	Search for and open the command prompt. 
 
-![Command Prompt]() 
+	![Command Prompt]() 
 
 2.	Run the following command to install Yo Office and its dependencies: 
 	```
@@ -50,7 +50,7 @@ Visual Studio Code
 	  |Would you like to use TypeScript?|Yes <br> (Press Enter to accept the default)|
 	  |Choose a framework:|Jquery <br> (Press Enter to accept the default)|
   
-   ![Yo Office Screenshot]()
+  	 ![Yo Office Screenshot]()
    
 5. Once you have entered the above information, Yo Office will prompt you to open a resource page for more information and guidance. When developing an Office add-in on your own, the resource page provides a useful guide for the various stages in the Office development process. Choose Yes (press Enter to accept the default), and explore the plethora of resources available to Office add-in developers. In the background, Yo Office will continue to create your templates and install any remaining dependencies necessary for building the rest of your add-in. This may take a couple minutes. 
 
@@ -76,15 +76,20 @@ Visual Studio Code
     d.	In the Upload Add-in dialog, choose **Browse** and select the my-office-add-in-manifest.xml file from the “myAddin” folder in Documents. Then, choose **Upload**. You should see your add-in deploy in Excel and a button apear on the Home Tab.
     > **Important**: Leave this page open with the Excel loaded for the rest of the walkthrough.
 
-![Screenshot of show taskpane button]()
+	![Screenshot of show taskpane button]()
 
-![Screenshot of default add-in template in Office]()
+	![Screenshot of default add-in template in Office]()
 
 ## Part 2: Customize the Office Ribbon UI
 
-1. In the Solution Explorer, double-click on the node named *my-office-addin-manifest.xml* to open the add-in manifest file in the editor. Browse through the file and note the different options you can set for your Add-in, such as provider, version, Display Name.
+1. In the command prompt, ensure you are in the myAddin directory, then run the following command to open your project folder in Visual Studio Code.
 
-2. Now, find the XML block that looks like this. Take a minute and read through it as it describes how add-ins can integrate with the Office UI. The example below demonstrates how an add-in can add a button to the Word ribbon's Home tab using Add-in commands. 
+	```
+	code .
+	```
+2. Take a look at the structure of your new add-in project in the Solution Explorer. The source files that define the web portion of the add-in are contained in the **src** folder. You should also observe that the root folder of the project contains a top-level manifest, *my-office-addin-manifest.xml*. Double click this file to open it in the editor. Browse through the file and note the different options you can set for your Add-in, such as provider, version, Display Name.
+
+3. Now, find the XML block that looks like this. Take a minute and read through it as it describes how add-ins can integrate with the Office UI. The example below demonstrates how an add-in can add a button to the Word ribbon's Home tab using Add-in commands. 
 
 	```XML
         <!-- PrimaryCommandSurface==Main Office Ribbon. -->
@@ -130,22 +135,22 @@ Visual Studio Code
             </ExtensionPoint>
 	```
 
-3. Let's modify the button to say "Hello World" instead of "Show Taskpane". Find the following element in the file.
+4. Let's modify the button to say "Hello World" instead of "Show Taskpane". Find the following element in the file.
 
 	```XML
 		<Title resid="Contoso.TaskpaneButton.Label" />
 	```
 	This indicates that the label of the title is stored in a string resource named **Contoso.TaskpaneButton.Label**.
-4. Scroll down until you find the **ShortString** string resource with that label.
-5. Now, set the DefaultValue attribute to *Hello World*. Your XML should look like this: 
+5. Scroll down until you find the **ShortString** string resource with that label.
+6. Now, set the DefaultValue attribute to *Hello World*. Your XML should look like this: 
 
 	```XML
 		<bt:String id="Contoso.TaskpaneButton.Label" DefaultValue="Hello World" />
 	```
 
-5.	Save the changes. Then, sideload the add-in into Excel again. The label of the button shoul dbe different.
+7.	Save the changes. Then, sideload the add-in into Excel again. The label of the button should be different.
 
-![Screenshot of updated button]()
+	![Screenshot of updated button]()
 
 ## Part 3: Write data to workbook
 Now, let's move on to add functionality to the add-in. There are other 2 very important files that are part of this project. One of them is the **index.html** page in the src folder of the project and represents the add-in's starting page. If not already opened please double click on it, you will see some HTML that begins like this:
