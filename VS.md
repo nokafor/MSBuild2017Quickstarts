@@ -254,7 +254,7 @@ This will create a starting document using Office Open XML (OOXML). The **addCon
 
 Notice how the inserted SOW has a badly formatted picture **highlighted in red below**. 
 
-	![Highlighted bad image in SOW](Images/Fig11.png)
+![Highlighted bad image in SOW](Images/Fig11.png)
 
 Let's fix this image.
 
