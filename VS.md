@@ -250,7 +250,8 @@ This will create a starting document using Office Open XML (OOXML). The **addCon
 	Don't feel overhelmed with the OOXML file you inserted; if you want to master how to handle OOXML we recommend you to read the article at **msdn.microsoft.com/en-us/library/office/dn423225.aspx** article.Close Word to terminate your debugging session and return to Visual Studio.
 	
 
-## Part 4: Learning how to handle inline Pictures in Word by replacing an existing image in the document.
+## Part 4: Replace images in the document
+
 *In this exercise you will continue working on the Visual Studio solution for the StatementOfWork add-in you created on in the previous exercise. You will extend the add-in's capabilities by adding JavaScript code to replace an image in the  active Word document by using the inlinePicture object members. This exercise is cummulative and assumes you completed Exercise 2.*
 
 1. Please note how the inserted SOW has a badly formatted picture **highlighted in red below**. This is intentional and you will fix this image in this exercise.
