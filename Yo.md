@@ -78,7 +78,7 @@ Visual Studio Code
     > **Important**: Leave this page open with the Excel loaded for the rest of the walkthrough.
 
 	![Screenshot of show taskpane button]()
-
+	
 	![Screenshot of default add-in template in Office]()
 
 ## Part 2: Customize the Office Ribbon UI
