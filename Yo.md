@@ -79,3 +79,4 @@ Typically, if this is the first time an Office Add-in is hosted on a machine in 
 
 ![Screenshot of default add-in template in Office]()
 
+## Part 2: Customize the Office Ribbon UI
