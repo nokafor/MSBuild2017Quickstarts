@@ -14,7 +14,7 @@ Visual Studio Code
 
 1.	Search for and open the command prompt. 
 
-	![Command Prompt]() 
+	![Command Prompt Screenshot]() 
 
 2.	Run the following command to install Yo Office and its dependencies: 
 	```
