@@ -73,10 +73,368 @@ Typically, if this is the first time an Office Add-in is hosted on a machine in 
   
     c.	On the My Add-ins tab (or My Organization tab if you're signed in to a work or school account), you will see a link in the upper-right corner of the dialog box to **Upload My Add-in** or **Manage My Add-ins**. Manage My Add-ins will open a menu where you can then choose Upload My Add-in.
   
-    d.	In the Upload Add-in dialog, choose **Browse** and select the my-office-add-in-manifest.xml file from the “myAddin” folder in Documents. Then, choose **Upload**. Your add-in will load in Excel Online.
+    d.	In the Upload Add-in dialog, choose **Browse** and select the my-office-add-in-manifest.xml file from the “myAddin” folder in Documents. Then, choose **Upload**. You should see your add-in deploy in Excel and a button apear on the Home Tab.
+    > Note: Leave this page open with the Excel loaded for the rest of the walkthrough.
 
 ![Screenshot of show taskpane button]()
 
 ![Screenshot of default add-in template in Office]()
 
 ## Part 2: Customize the Office Ribbon UI
+
+1. In the Solution Explorer, double-click on the node named *my-office-addin-manifest.xml* to open the add-in manifest file in the editor. Browse through the file and note the different options you can set for your Add-in, such as provider, version, Display Name.
+
+2. Now, find the XML block that looks like this. Take a minute and read through it as it describes how add-ins can integrate with the Office UI. The example below demonstrates how an add-in can add a button to the Word ribbon's Home tab using Add-in commands. 
+
+	```XML
+        <!-- PrimaryCommandSurface==Main Office Ribbon. -->
+            <ExtensionPoint xsi:type="PrimaryCommandSurface">
+                <!-- Use OfficeTab to extend an existing Tab. Use CustomTab to create a new tab. -->
+                <OfficeTab id="TabHome">
+                <!-- Ensure you provide a unique id for the group. Recommendation for any IDs is to namespace using your company name. -->
+                <Group id="Contoso.Group1">
+                    <!-- Label for your group. resid must point to a ShortString resource. -->
+                    <Label resid="Contoso.Group1Label" />
+                    <!-- Icons. Required sizes 16,32,80, optional 20, 24, 40, 48, 64. Strongly recommended to provide all sizes for great UX. -->
+                    <!-- Use PNG icons and remember that all URLs on the resources section must use HTTPS. -->
+                    <Icon>
+                    <bt:Image size="16" resid="Contoso.tpicon_16x16" />
+                    <bt:Image size="32" resid="Contoso.tpicon_32x32" />
+                    <bt:Image size="80" resid="Contoso.tpicon_80x80" />
+                    </Icon>
+
+                    <!-- Control. It can be of type "Button" or "Menu". -->
+                    <Control xsi:type="Button" id="Contoso.TaskpaneButton">
+                    <Label resid="Contoso.TaskpaneButton.Label" />
+                    <Supertip>
+                        <!-- ToolTip title. resid must point to a ShortString resource. -->
+                        <Title resid="Contoso.TaskpaneButton.Label" />
+                        <!-- ToolTip description. resid must point to a LongString resource. -->
+                        <Description resid="Contoso.TaskpaneButton.Tooltip" />
+                    </Supertip>
+                    <Icon>
+                        <bt:Image size="16" resid="Contoso.tpicon_16x16" />
+                        <bt:Image size="32" resid="Contoso.tpicon_32x32" />
+                        <bt:Image size="80" resid="Contoso.tpicon_80x80" />
+                    </Icon>
+
+                    <!-- This is what happens when the command is triggered (E.g. click on the Ribbon). Supported actions are ExecuteFuncion or ShowTaskpane. -->
+                    <Action xsi:type="ShowTaskpane">
+                        <TaskpaneId>ButtonId1</TaskpaneId>
+                        <!-- Provide a url resource id for the location that will be displayed on the task pane. -->
+                         <SourceLocation resid="Contoso.Taskpane.Url" />
+                    </Action>
+                    </Control>
+                </Group>
+                </OfficeTab>
+            </ExtensionPoint>
+	```
+
+3. Let's modify the button to say "Hello World" instead of "Show Taskpane". Find the following element in the file.
+
+	```XML
+		<Title resid="Contoso.TaskpaneButton.Label" />
+	```
+	This indicates that the label of the title is stored in a string resource named **Contoso.TaskpaneButton.Label**.
+4. Scroll down until you find the **ShortString** string resource with that label.
+5. Now, set the DefaultValue attribute to *Hello World*. Your XML should look like this: 
+
+	```XML
+		<bt:String id="Contoso.TaskpaneButton.Label" DefaultValue="Hello World" />
+	```
+
+5.	Save the changes. Then, sideload the add-in into Excel again. The label of the button shoul dbe different.
+
+![Screenshot of updated button]()
+
+## Part 3: Write data to workbook
+Now, let's move on to add functionality to the add-in. There are other 2 very important files that are part of this project. One of them is the **index.html** page in the src folder of the project and represents the add-in's starting page. If not already opened please double click on it, you will see some HTML that begins like this:
+
+```html
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My office add-in</title>
+
+    <!-- Office JavaScript API -->
+    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.debug.js"></script>
+
+    <!-- LOCAL -->
+    <link rel="stylesheet" href="node_modules/office-ui-fabric-js/dist/css/fabric.min.css" />
+    <link rel="stylesheet" href="node_modules/office-ui-fabric-js/dist/css/fabric.components.css" />
+
+    <!-- CDN -->
+    <!-- For the Office UI Fabric, go to http://aka.ms/office-ui-fabric to learn more. -->
+    <!--<link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.2.0/css/fabric.min.css" />-->
+    <!--<link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.2.0/css/fabric.components.min.css" />-->
+
+    <!-- Template styles -->
+    <link href="app.css" rel="stylesheet" type="text/css" />
+</head>
+```
+
+There are important references included in the **index.html** head element. One for our Office.js library **<script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.debug.js"></script>**, which enables the developer to interact with Excel. There is also a reference to include  Office UI Fabric components, which are the styles that provide building blocks for UI optimized for Office to make your add-in look great. There is also a reference to **app.js** script at the end of the body element, which implements the logic of the add-in.
+ 
+First, we are going to edit the JavaScript code in **app.ts** to add the ability write data to a workbook.
+
+1. Double-click **app.ts** to open the file in a code editor window.
+2. Replace the **run** function with the following snippet.
+ ```javascript
+/** Load sample data into a new worksheet and create a chart */
+async function createReport() {
+    try {
+        await Excel.run(async (context) => {
+            // Create a proxy object for a new worksheet
+            const sheet = context.workbook.worksheets.add();
+
+            try {
+                await writeSheetData(sheet);
+                sheet.activate();
+                await context.sync();
+            }
+            catch (error) {
+                /**
+                 * Try to activate the new sheet regardless, to show
+                 * how far the processing got before failing
+                 */
+                sheet.activate();
+                await context.sync();
+
+                /**
+                 * Then re-throw the original error, for appropriate error-handling
+                 * (in this snippet, simply showing a notification)
+                 */
+                throw error;
+            }
+        });
+
+        showNotification("Report generated successfully.");
+    }
+    catch (error) {
+        console.log(error);
+        showNotification("Failed to generate report. See console for errors.")
+    }
+
+    async function writeSheetData(sheet: Excel.Worksheet) {
+        // Set the report title in the worksheet
+        const titleCell = sheet.getCell(0, 0);
+        titleCell.values = [["Quarterly Sales Report"]];
+        titleCell.format.font.name = "Century";
+        titleCell.format.font.size = 26;
+
+        // Create an array containing sample data
+        const headerNames = ["Product", "Qtr1", "Qtr2", "Qtr3", "Qtr4"];
+        const data = [
+            ["Frames", 5000, 7000, 6544, 4377],
+            ["Saddles", 400, 323, 276, 651],
+            ["Brake levers", 12000, 8766, 8456, 9812],
+            ["Chains", 1550, 1088, 692, 853],
+            ["Mirrors", 225, 600, 923, 544],
+            ["Spokes", 6005, 7634, 4589, 8765]
+        ];
+
+        // Write the sample data to the specified range in the worksheet 
+        // and bold the header row
+        const headerRow = titleCell.getOffsetRange(1, 0)
+            .getResizedRange(0, headerNames.length - 1);
+        headerRow.values = [headerNames];
+        headerRow.getRow(0).format.font.bold = true;
+
+        const dataRange = headerRow.getOffsetRange(1, 0)
+            .getResizedRange(data.length - 1, 0);
+        dataRange.values = data;
+
+
+        titleCell.getResizedRange(0, headerNames.length - 1).merge();
+        dataRange.format.autofitColumns();
+
+        const columnRanges = headerNames.map((header, index) => dataRange.getColumn(index).load("format/columnWidth"));
+        await sheet.context.sync();
+
+        // For the header (product name) column, make it a minimum of 100px;
+        const firstColumn = columnRanges.shift();
+        if (firstColumn.format.columnWidth < 100) {
+            console.log("Expanding the first column to 100px");
+            firstColumn.format.columnWidth = 100;
+        }
+
+        // For the remainder, make them identical or a minimum of 60px
+        let minColumnWidth = 60;
+        columnRanges.forEach((column, index) => {
+            console.log(`Column #${index + 1}: auto-fitted width = ${column.format.columnWidth}`);
+            minColumnWidth = Math.max(minColumnWidth, column.format.columnWidth);
+        })
+        console.log(`Setting data columns to a width of ${minColumnWidth} pixels`);
+        dataRange.getOffsetRange(0, 1).getResizedRange(0, -1)
+            .format.columnWidth = minColumnWidth;
+    }
+}
+ ```
+
+This will create an array of sample data, and write the sample data to the specified range in the worksheet. It will also apply basic formatting to the table. 
+
+3. Update the click handler in the Office.initialize function to the following.
+```
+$("#run").click(createReport);
+```
+
+Your final app.ts file should look like this:
+```
+(() => {
+  // The initialize function must be run each time a new page is loaded
+  Office.initialize = (reason) => {
+    $(document).ready(() => {
+      $("#run").click(createReport);
+    });
+  };
+
+/** Load sample data into a new worksheet and create a chart */
+async function createReport() {
+    try {
+        await Excel.run(async (context) => {
+            // Create a proxy object for a new worksheet
+            const sheet = context.workbook.worksheets.add();
+
+            try {
+                await writeSheetData(sheet);
+                sheet.activate();
+                await context.sync();
+            }
+            catch (error) {
+                /**
+                 * Try to activate the new sheet regardless, to show
+                 * how far the processing got before failing
+                 */
+                sheet.activate();
+                await context.sync();
+
+                /**
+                 * Then re-throw the original error, for appropriate error-handling
+                 * (in this snippet, simply showing a notification)
+                 */
+                throw error;
+            }
+        });
+
+        showNotification("Report generated successfully.");
+    }
+    catch (error) {
+        console.log(error);
+        showNotification("Failed to generate report. See console for errors.")
+    }
+
+    async function writeSheetData(sheet: Excel.Worksheet) {
+        // Set the report title in the worksheet
+        const titleCell = sheet.getCell(0, 0);
+        titleCell.values = [["Quarterly Sales Report"]];
+        titleCell.format.font.name = "Century";
+        titleCell.format.font.size = 26;
+
+        // Create an array containing sample data
+        const headerNames = ["Product", "Qtr1", "Qtr2", "Qtr3", "Qtr4"];
+        const data = [
+            ["Frames", 5000, 7000, 6544, 4377],
+            ["Saddles", 400, 323, 276, 651],
+            ["Brake levers", 12000, 8766, 8456, 9812],
+            ["Chains", 1550, 1088, 692, 853],
+            ["Mirrors", 225, 600, 923, 544],
+            ["Spokes", 6005, 7634, 4589, 8765]
+        ];
+
+        // Write the sample data to the specified range in the worksheet 
+        // and bold the header row
+        const headerRow = titleCell.getOffsetRange(1, 0)
+            .getResizedRange(0, headerNames.length - 1);
+        headerRow.values = [headerNames];
+        headerRow.getRow(0).format.font.bold = true;
+
+        const dataRange = headerRow.getOffsetRange(1, 0)
+            .getResizedRange(data.length - 1, 0);
+        dataRange.values = data;
+
+
+        titleCell.getResizedRange(0, headerNames.length - 1).merge();
+        dataRange.format.autofitColumns();
+
+        const columnRanges = headerNames.map((header, index) => dataRange.getColumn(index).load("format/columnWidth"));
+        await sheet.context.sync();
+
+        // For the header (product name) column, make it a minimum of 100px;
+        const firstColumn = columnRanges.shift();
+        if (firstColumn.format.columnWidth < 100) {
+            console.log("Expanding the first column to 100px");
+            firstColumn.format.columnWidth = 100;
+        }
+
+        // For the remainder, make them identical or a minimum of 60px
+        let minColumnWidth = 60;
+        columnRanges.forEach((column, index) => {
+            console.log(`Column #${index + 1}: auto-fitted width = ${column.format.columnWidth}`);
+            minColumnWidth = Math.max(minColumnWidth, column.format.columnWidth);
+        })
+        console.log(`Setting data columns to a width of ${minColumnWidth} pixels`);
+        dataRange.getOffsetRange(0, 1).getResizedRange(0, -1)
+            .format.columnWidth = minColumnWidth;
+    }
+}
+
+/**
+ * Display the notification having synced the changes.
+ */
+function showNotification(message: string) {
+    const messageBanner = $('.ms-MessageBanner');
+    $('.ms-MessageBanner-clipper').text(message);
+    $('.ms-MessageBanner-close').click(() => {
+        messageBanner.hide();
+        messageBanner.off('click');
+    });
+    messageBanner.show();
+}
+
+})();
+
+```
+4. Save the file. Then, double click the **index.html**  file in the same folder. 
+
+5. Update the **main** element to match the following HTML layout, which will modify the template to include specific information about the functionality of this add-in and what users should expect. It will also update the button by which your add-in's logic will be triggered.
+
+```html
+<main class="ms-welcome__main">
+        <h2 class="ms-font-xl ms-fontWeight-semilight ms-fontColor-neutralPrimary ms-u-slideUpIn20"> Discover what myHelloWorldAddin can do for you today! </h2>
+        <ul class="ms-List ms-welcome__features ms-u-slideUpIn10">
+            <li class="ms-ListItem">
+                <i class="ms-Icon ms-Icon--Table"></i>
+                <span class="ms-font-m ms-fontColor-neutralPrimary">Load sample data into the worksheet</span>
+            </li>
+            <li class="ms-ListItem">
+                <i class="ms-Icon ms-Icon--BarChart4"></i>
+                <span class="ms-font-m ms-fontColor-neutralPrimary">Create a chart using the Excel API</span>
+            </li>
+            <li class="ms-ListItem">
+                <i class="ms-Icon ms-Icon--Unlock"></i>
+                <span class="ms-font-m ms-fontColor-neutralPrimary">Expand the Office Ribbon UI</span>
+            </li>
+        </ul>
+        <br />
+        <br />
+        <p class="ms-font-l">Modify the source files, then click below.</p>
+        <button id="run" class="ms-welcome__action ms-Button ms-Button--hero ms-u-slideUpIn20">
+            <span class="ms-Button-label">Create Report</span>
+            <span class="ms-Button-icon"><i class="ms-Icon ms-Icon--ChevronRight"></i></span>
+        </button>
+    </main>
+```
+
+6. Save the file. Then, go to the add-in loaded in Excel. The add-in should have updated to reflect the changes we made. This is done through Browsersync.
+
+7. Click **Create Report**. You should see a sample sales report split by quarters, for several products. 
+
+![Screenshot of generated report]()
+
+## Part 4: Add a chart bound to that data
+Now let’s see if we can add a chart that is bound to the data we added. 
+
+--
+That’s it! Congratulation on creating your first Excel add-in that writes data to the workbook and creates a chart bound to that data.
+
