@@ -153,7 +153,7 @@ Visual Studio Code
 	![Screenshot of updated button]()
 
 ## Part 3: Write data to workbook
-Now, let's move on to add functionality to the add-in. There are other 2 very important files that are part of this project. One of them is the **index.html** page in the src folder of the project and represents the add-in's starting page. If not already opened please double click on it, you will see some HTML that begins like this:
+Now, let's move on to add functionality to the add-in. There are two very important files that are in the **src** folder of the project. One of them is the *index.html* page, which represents the add-in's starting page. Double click **index.html** in the Solution Explorer to open it in a code editor window. You will see some HTML that begins like this:
 
 ```html
 <head>
@@ -179,7 +179,7 @@ Now, let's move on to add functionality to the add-in. There are other 2 very im
 </head>
 ```
 
-There are important references included in the **index.html** head element. One for our Office.js library **<script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.debug.js"></script>**, which enables the developer to interact with Excel. There is also a reference to include  Office UI Fabric components, which are the styles that provide building blocks for UI optimized for Office to make your add-in look great. There is also a reference to **app.js** script at the end of the body element, which implements the logic of the add-in.
+There are important references included in the **index.html** head element. One for our Office.js library **<script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.debug.js"></script>**, which enables the developer to interact with Excel. There is also a reference to include  Office UI Fabric components, which are the styles that provide building blocks for UI optimized for Office to make your add-in look great. If you scroll to the bottom of the html page, you will also see a reference to the **app.js** script at the end of the body element, which implements the logic of the add-in.
  
 First, we are going to edit the JavaScript code in **app.ts** to add the ability write data to a workbook.
 
@@ -400,42 +400,42 @@ function showNotification(message: string) {
 })();
 
 ```
-4. Save the file. Then, double click the **index.html**  file in the same folder. 
+4. Save the file. Then, reopen the **index.html**  file. 
 
-5. Update the **main** element to match the following HTML layout, which will modify the template to include specific information about the functionality of this add-in and what users should expect. It will also update the button by which your add-in's logic will be triggered.
+5. Update the **main** element to match the following HTML layout, which will modify the add-in's layout to match the updated logic.
 
-```html
-<main class="ms-welcome__main">
-        <h2 class="ms-font-xl ms-fontWeight-semilight ms-fontColor-neutralPrimary ms-u-slideUpIn20"> Discover what myHelloWorldAddin can do for you today! </h2>
-        <ul class="ms-List ms-welcome__features ms-u-slideUpIn10">
-            <li class="ms-ListItem">
-                <i class="ms-Icon ms-Icon--Table"></i>
-                <span class="ms-font-m ms-fontColor-neutralPrimary">Load sample data into the worksheet</span>
-            </li>
-            <li class="ms-ListItem">
-                <i class="ms-Icon ms-Icon--BarChart4"></i>
-                <span class="ms-font-m ms-fontColor-neutralPrimary">Create a chart using the Excel API</span>
-            </li>
-            <li class="ms-ListItem">
-                <i class="ms-Icon ms-Icon--Unlock"></i>
-                <span class="ms-font-m ms-fontColor-neutralPrimary">Expand the Office Ribbon UI</span>
-            </li>
-        </ul>
-        <br />
-        <br />
-        <p class="ms-font-l">Modify the source files, then click below.</p>
-        <button id="run" class="ms-welcome__action ms-Button ms-Button--hero ms-u-slideUpIn20">
-            <span class="ms-Button-label">Create Report</span>
-            <span class="ms-Button-icon"><i class="ms-Icon ms-Icon--ChevronRight"></i></span>
-        </button>
-    </main>
-```
+	```html
+	    <main class="ms-welcome__main">
+		<h2 class="ms-font-xl ms-fontWeight-semilight ms-fontColor-neutralPrimary ms-u-slideUpIn20"> Discover what myOfficeAddin can do for you today! </h2>
+		<ul class="ms-List ms-welcome__features ms-u-slideUpIn10">
+		    <li class="ms-ListItem">
+			<i class="ms-Icon ms-Icon--Unlock"></i>
+			<span class="ms-font-m ms-fontColor-neutralPrimary">Expand the Office Ribbon UI</span>
+		    </li>
+		    <li class="ms-ListItem">
+			<i class="ms-Icon ms-Icon--Table"></i>
+			<span class="ms-font-m ms-fontColor-neutralPrimary">Load sample data into the worksheet</span>
+		    </li>
+		    <li class="ms-ListItem">
+			<i class="ms-Icon ms-Icon--BarChart4"></i>
+			<span class="ms-font-m ms-fontColor-neutralPrimary">Create a chart using the Excel API</span>
+		    </li>
+		</ul>
+		<br />
+		<br />
+		<p class="ms-font-l">Modify the source files, then click below.</p>
+		<button id="run" class="ms-welcome__action ms-Button ms-Button--hero ms-u-slideUpIn20">
+		    <span class="ms-Button-label">Create Report</span>
+		    <span class="ms-Button-icon"><i class="ms-Icon ms-Icon--ChevronRight"></i></span>
+		</button>
+	    </main>
+	```
 
-6. Save the file. Then, go to the add-in loaded in Excel. The add-in should have updated to reflect the changes we made. This is done through [Browsersync](https://browsersync.io/).
+6. Now, let's check out our progress. Save the file. Then, go to the Excel page that contains your add-in. The add-in should have automatically updated to reflect the changes. This is done through [Browsersync](https://browsersync.io/).
 
-7. Click **Create Report**. You should see a sample sales report split by quarters, for several products. 
+7. Click **Create Report**. A sample sales report split by quarters, for several products should load into your Excel file like this: 
 
-![Screenshot of generated report]()
+	![Screenshot of generated report]()
 
 ## Part 4: Add a chart bound to that data
 Now let’s see if we can add a chart that is bound to the data we added. 
