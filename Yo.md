@@ -11,7 +11,8 @@ Visual Studio Code
 ## Part 1: Getting Started
 
 1.	Search for and open the command prompt. 
-![]() 
+
+![Command Prompt]() 
 
 2.	Run the following command to install Yo Office and its dependencies: 
 ```
@@ -61,6 +62,7 @@ npm start
 ```
   
  Once successfully started, the following page will open in your default browser.
+ 
 ![Screenshot of default template in browser]()
 
 Typically, if this is the first time an Office Add-in is hosted on a machine in this way, the browser will throw an error, and you will need to add the self-signed security certificate that is created as a trusted root certificate or your add-in will not display. This guide bypasses that step.
