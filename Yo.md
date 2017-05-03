@@ -431,7 +431,7 @@ First, let's add logic to the **app.ts** file to write data to the workbook.
 	    </main>
 	```
 
-6. Let's check out our progress. Save the *index.html* file. Then, go to the Excel page that contains your add-in. The add-in should have automatically updated to reflect the changes. This is done through [Browsersync](https://browsersync.io/).
+6. Let's check out our progress! Save the index.html file. Then, go to the Excel page that contains your add-in. The add-in should have automatically updated to reflect the changes. This is done through [Browsersync](https://browsersync.io/).
 
 7. Click **Create Report**. A sample sales report split by quarters, for several products should load into your Excel file like this: 
 
