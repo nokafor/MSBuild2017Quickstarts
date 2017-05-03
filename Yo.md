@@ -181,228 +181,228 @@ Now, let's move on to add functionality to the add-in. There are two very import
 
 There are important references included in the **index.html** head element. One for our Office.js library **<script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.debug.js"></script>**, which enables the developer to interact with Excel. There is also a reference to include  Office UI Fabric components, which are the styles that provide building blocks for UI optimized for Office to make your add-in look great. If you scroll to the bottom of the html page, you will also see a reference to the **app.js** script at the end of the body element, which implements the logic of the add-in.
  
-First, we are going to edit the JavaScript code in **app.ts** to add the ability write data to a workbook.
+First, let's add logic to the **app.ts** file to write data to the workbook.
 
 1. Double-click **app.ts** to open the file in a code editor window.
 2. Replace the **run** function with the following snippet.
- ```javascript
-/** Load sample data into a new worksheet and create a chart */
-async function createReport() {
-    try {
-        await Excel.run(async (context) => {
-            // Create a proxy object for a new worksheet
-            const sheet = context.workbook.worksheets.add();
+	 ```javascript
+	/** Load sample data into a new worksheet and create a chart */
+	async function createReport() {
+	    try {
+		await Excel.run(async (context) => {
+		    // Create a proxy object for a new worksheet
+		    const sheet = context.workbook.worksheets.add();
 
-            try {
-                await writeSheetData(sheet);
-                sheet.activate();
-                await context.sync();
-            }
-            catch (error) {
-                /**
-                 * Try to activate the new sheet regardless, to show
-                 * how far the processing got before failing
-                 */
-                sheet.activate();
-                await context.sync();
+		    try {
+			await writeSheetData(sheet);
+			sheet.activate();
+			await context.sync();
+		    }
+		    catch (error) {
+			/**
+			 * Try to activate the new sheet regardless, to show
+			 * how far the processing got before failing
+			 */
+			sheet.activate();
+			await context.sync();
 
-                /**
-                 * Then re-throw the original error, for appropriate error-handling
-                 * (in this snippet, simply showing a notification)
-                 */
-                throw error;
-            }
-        });
+			/**
+			 * Then re-throw the original error, for appropriate error-handling
+			 * (in this snippet, simply showing a notification)
+			 */
+			throw error;
+		    }
+		});
 
-        showNotification("Report generated successfully.");
-    }
-    catch (error) {
-        console.log(error);
-        showNotification("Failed to generate report. See console for errors.")
-    }
+		showNotification("Report generated successfully.");
+	    }
+	    catch (error) {
+		console.log(error);
+		showNotification("Failed to generate report. See console for errors.")
+	    }
 
-    async function writeSheetData(sheet: Excel.Worksheet) {
-        // Set the report title in the worksheet
-        const titleCell = sheet.getCell(0, 0);
-        titleCell.values = [["Quarterly Sales Report"]];
-        titleCell.format.font.name = "Century";
-        titleCell.format.font.size = 26;
+	    async function writeSheetData(sheet: Excel.Worksheet) {
+		// Set the report title in the worksheet
+		const titleCell = sheet.getCell(0, 0);
+		titleCell.values = [["Quarterly Sales Report"]];
+		titleCell.format.font.name = "Century";
+		titleCell.format.font.size = 26;
 
-        // Create an array containing sample data
-        const headerNames = ["Product", "Qtr1", "Qtr2", "Qtr3", "Qtr4"];
-        const data = [
-            ["Frames", 5000, 7000, 6544, 4377],
-            ["Saddles", 400, 323, 276, 651],
-            ["Brake levers", 12000, 8766, 8456, 9812],
-            ["Chains", 1550, 1088, 692, 853],
-            ["Mirrors", 225, 600, 923, 544],
-            ["Spokes", 6005, 7634, 4589, 8765]
-        ];
+		// Create an array containing sample data
+		const headerNames = ["Product", "Qtr1", "Qtr2", "Qtr3", "Qtr4"];
+		const data = [
+		    ["Frames", 5000, 7000, 6544, 4377],
+		    ["Saddles", 400, 323, 276, 651],
+		    ["Brake levers", 12000, 8766, 8456, 9812],
+		    ["Chains", 1550, 1088, 692, 853],
+		    ["Mirrors", 225, 600, 923, 544],
+		    ["Spokes", 6005, 7634, 4589, 8765]
+		];
 
-        // Write the sample data to the specified range in the worksheet 
-        // and bold the header row
-        const headerRow = titleCell.getOffsetRange(1, 0)
-            .getResizedRange(0, headerNames.length - 1);
-        headerRow.values = [headerNames];
-        headerRow.getRow(0).format.font.bold = true;
+		// Write the sample data to the specified range in the worksheet 
+		// and bold the header row
+		const headerRow = titleCell.getOffsetRange(1, 0)
+		    .getResizedRange(0, headerNames.length - 1);
+		headerRow.values = [headerNames];
+		headerRow.getRow(0).format.font.bold = true;
 
-        const dataRange = headerRow.getOffsetRange(1, 0)
-            .getResizedRange(data.length - 1, 0);
-        dataRange.values = data;
-
-
-        titleCell.getResizedRange(0, headerNames.length - 1).merge();
-        dataRange.format.autofitColumns();
-
-        const columnRanges = headerNames.map((header, index) => dataRange.getColumn(index).load("format/columnWidth"));
-        await sheet.context.sync();
-
-        // For the header (product name) column, make it a minimum of 100px;
-        const firstColumn = columnRanges.shift();
-        if (firstColumn.format.columnWidth < 100) {
-            console.log("Expanding the first column to 100px");
-            firstColumn.format.columnWidth = 100;
-        }
-
-        // For the remainder, make them identical or a minimum of 60px
-        let minColumnWidth = 60;
-        columnRanges.forEach((column, index) => {
-            console.log(`Column #${index + 1}: auto-fitted width = ${column.format.columnWidth}`);
-            minColumnWidth = Math.max(minColumnWidth, column.format.columnWidth);
-        })
-        console.log(`Setting data columns to a width of ${minColumnWidth} pixels`);
-        dataRange.getOffsetRange(0, 1).getResizedRange(0, -1)
-            .format.columnWidth = minColumnWidth;
-    }
-}
- ```
-
-This will create an array of sample data, and write the sample data to the specified range in the worksheet. It will also apply basic formatting to the table. 
-
-3. Update the click handler in the Office.initialize function to the following.
-```
-$("#run").click(createReport);
-```
-
-Your final app.ts file should look like this:
-```
-(() => {
-  // The initialize function must be run each time a new page is loaded
-  Office.initialize = (reason) => {
-    $(document).ready(() => {
-      $("#run").click(createReport);
-    });
-  };
-
-/** Load sample data into a new worksheet and create a chart */
-async function createReport() {
-    try {
-        await Excel.run(async (context) => {
-            // Create a proxy object for a new worksheet
-            const sheet = context.workbook.worksheets.add();
-
-            try {
-                await writeSheetData(sheet);
-                sheet.activate();
-                await context.sync();
-            }
-            catch (error) {
-                /**
-                 * Try to activate the new sheet regardless, to show
-                 * how far the processing got before failing
-                 */
-                sheet.activate();
-                await context.sync();
-
-                /**
-                 * Then re-throw the original error, for appropriate error-handling
-                 * (in this snippet, simply showing a notification)
-                 */
-                throw error;
-            }
-        });
-
-        showNotification("Report generated successfully.");
-    }
-    catch (error) {
-        console.log(error);
-        showNotification("Failed to generate report. See console for errors.")
-    }
-
-    async function writeSheetData(sheet: Excel.Worksheet) {
-        // Set the report title in the worksheet
-        const titleCell = sheet.getCell(0, 0);
-        titleCell.values = [["Quarterly Sales Report"]];
-        titleCell.format.font.name = "Century";
-        titleCell.format.font.size = 26;
-
-        // Create an array containing sample data
-        const headerNames = ["Product", "Qtr1", "Qtr2", "Qtr3", "Qtr4"];
-        const data = [
-            ["Frames", 5000, 7000, 6544, 4377],
-            ["Saddles", 400, 323, 276, 651],
-            ["Brake levers", 12000, 8766, 8456, 9812],
-            ["Chains", 1550, 1088, 692, 853],
-            ["Mirrors", 225, 600, 923, 544],
-            ["Spokes", 6005, 7634, 4589, 8765]
-        ];
-
-        // Write the sample data to the specified range in the worksheet 
-        // and bold the header row
-        const headerRow = titleCell.getOffsetRange(1, 0)
-            .getResizedRange(0, headerNames.length - 1);
-        headerRow.values = [headerNames];
-        headerRow.getRow(0).format.font.bold = true;
-
-        const dataRange = headerRow.getOffsetRange(1, 0)
-            .getResizedRange(data.length - 1, 0);
-        dataRange.values = data;
+		const dataRange = headerRow.getOffsetRange(1, 0)
+		    .getResizedRange(data.length - 1, 0);
+		dataRange.values = data;
 
 
-        titleCell.getResizedRange(0, headerNames.length - 1).merge();
-        dataRange.format.autofitColumns();
+		titleCell.getResizedRange(0, headerNames.length - 1).merge();
+		dataRange.format.autofitColumns();
 
-        const columnRanges = headerNames.map((header, index) => dataRange.getColumn(index).load("format/columnWidth"));
-        await sheet.context.sync();
+		const columnRanges = headerNames.map((header, index) => dataRange.getColumn(index).load("format/columnWidth"));
+		await sheet.context.sync();
 
-        // For the header (product name) column, make it a minimum of 100px;
-        const firstColumn = columnRanges.shift();
-        if (firstColumn.format.columnWidth < 100) {
-            console.log("Expanding the first column to 100px");
-            firstColumn.format.columnWidth = 100;
-        }
+		// For the header (product name) column, make it a minimum of 100px;
+		const firstColumn = columnRanges.shift();
+		if (firstColumn.format.columnWidth < 100) {
+		    console.log("Expanding the first column to 100px");
+		    firstColumn.format.columnWidth = 100;
+		}
 
-        // For the remainder, make them identical or a minimum of 60px
-        let minColumnWidth = 60;
-        columnRanges.forEach((column, index) => {
-            console.log(`Column #${index + 1}: auto-fitted width = ${column.format.columnWidth}`);
-            minColumnWidth = Math.max(minColumnWidth, column.format.columnWidth);
-        })
-        console.log(`Setting data columns to a width of ${minColumnWidth} pixels`);
-        dataRange.getOffsetRange(0, 1).getResizedRange(0, -1)
-            .format.columnWidth = minColumnWidth;
-    }
-}
+		// For the remainder, make them identical or a minimum of 60px
+		let minColumnWidth = 60;
+		columnRanges.forEach((column, index) => {
+		    console.log(`Column #${index + 1}: auto-fitted width = ${column.format.columnWidth}`);
+		    minColumnWidth = Math.max(minColumnWidth, column.format.columnWidth);
+		})
+		console.log(`Setting data columns to a width of ${minColumnWidth} pixels`);
+		dataRange.getOffsetRange(0, 1).getResizedRange(0, -1)
+		    .format.columnWidth = minColumnWidth;
+	    }
+	}
+	 ```
 
-/**
- * Display the notification having synced the changes.
- */
-function showNotification(message: string) {
-    const messageBanner = $('.ms-MessageBanner');
-    $('.ms-MessageBanner-clipper').text(message);
-    $('.ms-MessageBanner-close').click(() => {
-        messageBanner.hide();
-        messageBanner.off('click');
-    });
-    messageBanner.show();
-}
+	This will create an array of sample data, and write the sample data to the specified range in the worksheet. It will also apply basic formatting to the table. 
 
-})();
+3. Update the click handler in the **Office.initialize** function to the following.
+	```javascript
+	$("#run").click(createReport);
+	```
 
-```
-4. Save the file. Then, reopen the **index.html**  file. 
+	Your final app.ts file should look like this:
+	```javascript
+	(() => {
+	  // The initialize function must be run each time a new page is loaded
+	  Office.initialize = (reason) => {
+	    $(document).ready(() => {
+	      $("#run").click(createReport);
+	    });
+	  };
 
-5. Update the **main** element to match the following HTML layout, which will modify the add-in's layout to match the updated logic.
+	/** Load sample data into a new worksheet and create a chart */
+	async function createReport() {
+	    try {
+		await Excel.run(async (context) => {
+		    // Create a proxy object for a new worksheet
+		    const sheet = context.workbook.worksheets.add();
+
+		    try {
+			await writeSheetData(sheet);
+			sheet.activate();
+			await context.sync();
+		    }
+		    catch (error) {
+			/**
+			 * Try to activate the new sheet regardless, to show
+			 * how far the processing got before failing
+			 */
+			sheet.activate();
+			await context.sync();
+
+			/**
+			 * Then re-throw the original error, for appropriate error-handling
+			 * (in this snippet, simply showing a notification)
+			 */
+			throw error;
+		    }
+		});
+
+		showNotification("Report generated successfully.");
+	    }
+	    catch (error) {
+		console.log(error);
+		showNotification("Failed to generate report. See console for errors.")
+	    }
+
+	    async function writeSheetData(sheet: Excel.Worksheet) {
+		// Set the report title in the worksheet
+		const titleCell = sheet.getCell(0, 0);
+		titleCell.values = [["Quarterly Sales Report"]];
+		titleCell.format.font.name = "Century";
+		titleCell.format.font.size = 26;
+
+		// Create an array containing sample data
+		const headerNames = ["Product", "Qtr1", "Qtr2", "Qtr3", "Qtr4"];
+		const data = [
+		    ["Frames", 5000, 7000, 6544, 4377],
+		    ["Saddles", 400, 323, 276, 651],
+		    ["Brake levers", 12000, 8766, 8456, 9812],
+		    ["Chains", 1550, 1088, 692, 853],
+		    ["Mirrors", 225, 600, 923, 544],
+		    ["Spokes", 6005, 7634, 4589, 8765]
+		];
+
+		// Write the sample data to the specified range in the worksheet 
+		// and bold the header row
+		const headerRow = titleCell.getOffsetRange(1, 0)
+		    .getResizedRange(0, headerNames.length - 1);
+		headerRow.values = [headerNames];
+		headerRow.getRow(0).format.font.bold = true;
+
+		const dataRange = headerRow.getOffsetRange(1, 0)
+		    .getResizedRange(data.length - 1, 0);
+		dataRange.values = data;
+
+
+		titleCell.getResizedRange(0, headerNames.length - 1).merge();
+		dataRange.format.autofitColumns();
+
+		const columnRanges = headerNames.map((header, index) => dataRange.getColumn(index).load("format/columnWidth"));
+		await sheet.context.sync();
+
+		// For the header (product name) column, make it a minimum of 100px;
+		const firstColumn = columnRanges.shift();
+		if (firstColumn.format.columnWidth < 100) {
+		    console.log("Expanding the first column to 100px");
+		    firstColumn.format.columnWidth = 100;
+		}
+
+		// For the remainder, make them identical or a minimum of 60px
+		let minColumnWidth = 60;
+		columnRanges.forEach((column, index) => {
+		    console.log(`Column #${index + 1}: auto-fitted width = ${column.format.columnWidth}`);
+		    minColumnWidth = Math.max(minColumnWidth, column.format.columnWidth);
+		})
+		console.log(`Setting data columns to a width of ${minColumnWidth} pixels`);
+		dataRange.getOffsetRange(0, 1).getResizedRange(0, -1)
+		    .format.columnWidth = minColumnWidth;
+	    }
+	}
+
+	/**
+	 * Display the notification having synced the changes.
+	 */
+	function showNotification(message: string) {
+	    const messageBanner = $('.ms-MessageBanner');
+	    $('.ms-MessageBanner-clipper').text(message);
+	    $('.ms-MessageBanner-close').click(() => {
+		messageBanner.hide();
+		messageBanner.off('click');
+	    });
+	    messageBanner.show();
+	}
+
+	})();
+
+	```
+4. Now it's time to examine the HTML that has been added to the project to create the add-in's user interface. Save the **app.ts** file. Then, reopen the **index.html**  file. 
+
+5. Update the **main** element within **index.html** to match the following HTML layout, which will modify the add-in's layout for the new logic.
 
 	```html
 	    <main class="ms-welcome__main">
@@ -431,7 +431,7 @@ function showNotification(message: string) {
 	    </main>
 	```
 
-6. Now, let's check out our progress. Save the file. Then, go to the Excel page that contains your add-in. The add-in should have automatically updated to reflect the changes. This is done through [Browsersync](https://browsersync.io/).
+6. Let's check out our progress. Save the *index.html* file. Then, go to the Excel page that contains your add-in. The add-in should have automatically updated to reflect the changes. This is done through [Browsersync](https://browsersync.io/).
 
 7. Click **Create Report**. A sample sales report split by quarters, for several products should load into your Excel file like this: 
 
