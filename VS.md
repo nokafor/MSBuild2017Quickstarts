@@ -514,4 +514,4 @@ Note that the code is first getting all the content controls tagged as 'customer
 	
 --
 
-That's it! Congratulations on creating your first Word add-in that __.
+That's it! Congratulations on creating your first Word add-in that can create, search, and replace content.
