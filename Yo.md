@@ -288,6 +288,10 @@ First, let's add logic to the **app.ts** file to write data to the workbook.
 		console.log(`Setting data columns to a width of ${minColumnWidth} pixels`);
 		dataRange.getOffsetRange(0, 1).getResizedRange(0, -1)
 		    .format.columnWidth = minColumnWidth;
+		
+		/* Insert chart code below */
+		
+		
 	    }
 	}
 	
@@ -409,6 +413,10 @@ First, let's add logic to the **app.ts** file to write data to the workbook.
 		console.log(`Setting data columns to a width of ${minColumnWidth} pixels`);
 		dataRange.getOffsetRange(0, 1).getResizedRange(0, -1)
 		    .format.columnWidth = minColumnWidth;
+		
+		/* Insert chart code below */
+		
+		
 	    }
 	}
 
@@ -468,8 +476,11 @@ First, let's add logic to the **app.ts** file to write data to the workbook.
 ## Part 4: Add a chart bound to that data
 A common scenario in Excel is binding charts to data. *(Why?)* Let’s add a chart that is bound to our data. 
 
-1. Go to Visual Studio Code and reopen the **app.ts** file in the src folder, and add the following code to the end of the **WriteSheetData** function:
+1. Go to Visual Studio Code and reopen the **app.ts** file in the src folder. Find the "Insert chart code below" comment in the **WriteSheetData** function. Add the following code below:
 	```javascript
+		
+		/* Insert chart code below */
+		
 		// Add a new chart
 		const chart = sheet.charts.add(
 		    Excel.ChartType.columnClustered,
@@ -543,7 +554,8 @@ A common scenario in Excel is binding charts to data. *(Why?)* Let’s add a cha
 		console.log(`Setting data columns to a width of ${minColumnWidth} pixels`);
 		dataRange.getOffsetRange(0, 1).getResizedRange(0, -1)
 		    .format.columnWidth = minColumnWidth;
-
+		
+		/* Insert chart code below */
 
 		// Add a new chart
 		const chart = sheet.charts.add(
