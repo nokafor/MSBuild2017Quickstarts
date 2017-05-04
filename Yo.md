@@ -86,9 +86,9 @@ Visual Studio Code
 9. Your add-in will be loaded in Excel and a button will appear on the Home Tab ribbon. Click this button to reveal your add-in.
     > **Important**: Leave this Excel document open with the add-in loaded for the rest of the walkthrough.
 
-	![Screenshot of show taskpane button]()
+	![Screenshot of show taskpane button](assets/ribbon-button.png)
 	
-	![Screenshot of default add-in template in Office]()
+	![Screenshot of default add-in template in Office](assets/default-template.png)
 
 ## Part 2: Customize the Office Ribbon UI
 
@@ -165,10 +165,10 @@ Visual Studio Code
 8. Switch back to the browser with Excel and sideload the add-in again (repeat steps 8b-8d). The label of the button should now say "Hello World".
 	> Office only parses the manifest file when the add-in is loaded. Therefore, when you make updates to the manifest, you have to reload the add-in to see the changes reflected.
 
-	![Screenshot of updated button]()
+	![Screenshot of updated button](assets/helloworld-yo.png)
 
 ## Part 3: Write data to workbook
-Now, let's move on to add functionality to the add-in. There are two very important files that are in the **src** folder of the project. One of them is the index.html page, which represents the add-in's starting page. Double click **index.html** in the Solution Explorer to open it in a code editor window. You will see some HTML that begins like this:
+Now, let's move on to add functionality to the add-in. Go back to the project in Visual Studio Code. There are two very important files that are in the **src** folder of the project. One of them is the index.html page, which represents the add-in's starting page. Double click **index.html** in the Solution Explorer to open it in a code editor window. You will see some HTML that begins like this:
 
 ```html
 <head>
@@ -307,7 +307,7 @@ First, let's add logic to the **app.ts** file to write data to the workbook.
 
 	This will create an array of sample data, and write the sample data (with basic formatting) to the specified range in the worksheet. It will also display notifications within the add-in. 
 
-3. Update the click handler in the **Office.initialize** function to the following.
+3. Update the click handler in the **Office.initialize** function (line 10) to the following.
 	```javascript
 	$("#run").click(createReport);
 	```
@@ -430,7 +430,7 @@ First, let's add logic to the **app.ts** file to write data to the workbook.
 	```
 4. Now it's time to examine the HTML that has been added to the project to create the add-in's user interface. Save the **app.ts** file. Then, reopen the **index.html**  file. 
 
-5. Update the **main** element within **index.html** to match the following HTML layout, which will modify the add-in's layout for the new logic.
+5. Replace the **main** element (line 34) within **index.html** with the following HTML layout, which will modify the add-in's layout for the new logic.
 
 	```html
 	    <main class="ms-welcome__main">
@@ -468,7 +468,7 @@ First, let's add logic to the **app.ts** file to write data to the workbook.
 ## Part 4: Add a chart bound to that data
 A common scenario in Excel is binding charts to data. *(Why?)* Let’s add a chart that is bound to our data. 
 
-1. Reopen the **app.ts** file in the src folder, and add the following code to the end of the **WriteSheetData** function:
+1. Go to Visual Studio Code and reopen the **app.ts** file in the src folder, and add the following code to the end of the **WriteSheetData** function:
 	```javascript
 		// Add a new chart
 		const chart = sheet.charts.add(
