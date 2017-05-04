@@ -64,13 +64,13 @@ Visual Studio Code
 	```
 	> When developing an add-in on your machine, you can host your add-in locally, or use any web server or hosting technology – just make sure that the add-in is served using HTTPS, and update the add-in’s source location in the manifest. 
   
- 	Once successfully started, the following page will open in your default browser. This is the default template for the add-in. Confirm that you do not have an error, then close the page.
+ 7. Once successfully started, the following page will open in your default browser. This is the default template for the add-in. Confirm that you do not have an error, then **close this page**.
  
 	![Screenshot of default template in browser](assets/npm-start.PNG)
 
 	> Typically, the first time an Office Add-in is hosted on a machine through npm, the browser will throw an error, and you will need to [add the self-signed security certificate](https://github.com/OfficeDev/generator-office/blob/master/src/docs/ssl.md) that is created as a trusted root certificate or your add-in will not display. This walkthrough bypasses that step.
 
-6.	Load the add-in into Office. The easiest way to do this is by sideloading the add-in in Office Online:
+8.	Load the add-in into Office. The easiest way to do this is by sideloading the add-in in Office Online:
   
     a.	[Click here to go to Excel Online](https://office.live.com/start/excel.aspx). Choose **Sign in with a work or school account** and sign in with the credentials on the back of your badge.
   
