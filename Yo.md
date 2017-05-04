@@ -66,7 +66,7 @@ Visual Studio Code
   
  	Once successfully started, the following page will open in your default browser. This is the default template for the add-in. Confirm that you do not have an error, then close the page.
  
-	![Screenshot of default template in browser]()
+	![Screenshot of default template in browser](assets/npm-start.PNG)
 
 	> Typically, the first time an Office Add-in is hosted on a machine through npm, the browser will throw an error, and you will need to [add the self-signed security certificate](https://github.com/OfficeDev/generator-office/blob/master/src/docs/ssl.md) that is created as a trusted root certificate or your add-in will not display. This walkthrough bypasses that step.
 
