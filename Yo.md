@@ -430,7 +430,7 @@ First, let's add logic to the **app.ts** file to write data to the workbook.
 	```
 4. Now it's time to examine the HTML that has been added to the project to create the add-in's user interface. Save the **app.ts** file. Then, reopen the **index.html**  file. 
 
-5. Update the **main** element within **index.html** to match the following HTML layout, which will modify the add-in's layout for the new logic.
+5. Replace the **main** element (line 34) within **index.html** with the following HTML layout, which will modify the add-in's layout for the new logic.
 
 	```html
 	    <main class="ms-welcome__main">
