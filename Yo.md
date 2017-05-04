@@ -89,7 +89,7 @@ Visual Studio Code
 
 ## Part 2: Customize the Office Ribbon UI
 
-1. In the command prompt, ensure you are in the myAddin directory, then run the following command to open your project folder in Visual Studio Code.
+1. Open a new command prompt, and change the current directory to the myAddin folder. Run the following command to open your project folder in Visual Studio Code.
 
 	```
 	code .
@@ -156,6 +156,7 @@ Visual Studio Code
 	```
 
 7.	Save the changes. Then, sideload the add-in into Excel again. The label of the button should be different.
+	> Office only parses the manifest file when the add-in is loaded. Therefore, when you make updates to the manifest, you have to reload the add-in to see the changes reflected.
 
 	![Screenshot of updated button]()
 
@@ -190,7 +191,7 @@ There are important references included in the **index.html** head element. One 
  
 First, let's add logic to the **app.ts** file to write data to the workbook.
 
-1. Double-click **app.ts** to open the file in a code editor window.
+1. Double-click **app.ts** (in the *src* folder) to open the file in a code editor window.
 2. Replace the **run** function with the following snippet.
 	 ```javascript
 	/** Load sample data into a new worksheet and create a chart */
