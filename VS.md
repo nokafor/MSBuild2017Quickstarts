@@ -431,89 +431,89 @@ To illustrate that point, we will implement a simple example of how a template c
 1. Go back to Visual Studio, and in the Solution Explorer, double-click on **Home.js** to open this JavaScript file.
 2. Add the following code to the **onSearchAndTempletize** function:
 
-```javascript
-function onSearchAndTempletize() {
-        // on this method I actually want to create kind of a template. Will start by searching "Contoso". Then I will wrap each instance with a content control
-        // I will also change the format of each search instance...
+	```javascript
+	function onSearchAndTempletize() {
+		// on this method I actually want to create kind of a template. Will start by searching "Contoso". Then I will wrap each instance with a content control
+		// I will also change the format of each search instance...
 
-        Word.run(function (ctx) {
-            var results = ctx.document.body.search("Contoso");
-            ctx.load(results);
-            // we need to sync to get the search results/
-            return ctx.sync()
-            .then(function () {
-                //once we have the results we navigate through each occurrence and change a few things, as well as wrapping with a content control.
-                for (var i = 0; i < results.items.length; i++) {
-                    results.items[i].font.color = "#FF0000"    // Change color to Red
-                    results.items[i].font.highlightColor = "#FFFF00";
-                    results.items[i].font.bold = true;
-                    var cc = results.items[i].insertContentControl();
-                    cc.tag = "customer";  // this is an important piece of code, later on the exercise I will retrieve all the content controls with this tag and replace the content.
-                    cc.title = "Customer Name";
-                }
-                return ctx.sync()  // OK ready! lets send it to the host for processing :)
-            })
-            .then(function () {
-                showNotification("Task Complete!");
-            })
-            .catch(function (myError) {
-                showNotification("Error", myError.message);
-            })
-        });
+		Word.run(function (ctx) {
+		    var results = ctx.document.body.search("Contoso");
+		    ctx.load(results);
+		    // we need to sync to get the search results/
+		    return ctx.sync()
+		    .then(function () {
+			//once we have the results we navigate through each occurrence and change a few things, as well as wrapping with a content control.
+			for (var i = 0; i < results.items.length; i++) {
+			    results.items[i].font.color = "#FF0000"    // Change color to Red
+			    results.items[i].font.highlightColor = "#FFFF00";
+			    results.items[i].font.bold = true;
+			    var cc = results.items[i].insertContentControl();
+			    cc.tag = "customer";  // this is an important piece of code, later on the exercise I will retrieve all the content controls with this tag and replace the content.
+			    cc.title = "Customer Name";
+			}
+			return ctx.sync()  // OK ready! lets send it to the host for processing :)
+		    })
+		    .then(function () {
+			showNotification("Task Complete!");
+		    })
+		    .catch(function (myError) {
+			showNotification("Error", myError.message);
+		    })
+		});
 
 
-    } 
-```
+	    } 
+	```
 	
-Note that the code is searching for "Contoso". The search method returns a collection of ranges matching the search criteria. The code iterates through that collection and wraps each instance with a content control. It is also important to note that you are adding to each content control a tag with a "customer" title. This is important as we will use this information to replace the content of all the content controls with this tag with a new customer's name.  
+	Note that the code is searching for "Contoso". The search method returns a collection of ranges matching the search criteria. The code iterates through that collection and wraps each instance with a content control. It is also important to note that you are adding to each content control a tag with a "customer" title. This is important as we will use this information to replace the content of all the content controls with this tag with a new customer's name.  
 
 3. Test your work by pressing F5 to start a debug session and then click the **Step 1: Starting SOW** button. After the starting document gets inserted, click on the  **Step 3: Search and Templetize!** button to try your code. Each "Contoso" instance should be wrapped with a content control and with a yellow highlight. For visibility purposes we are also adding a red font color and yellow highlight to each search result instance. Your document should look like this after you click on the Step 1 and Step 3 buttons:
 
 
-	![SOW Template](Images/Fig13.png) 
+	![SOW Template](assets/initial-template.PNG) 
 	
 
 
 4. Make sure to select any of the 'Contoso' search instances and verify they were tagged as 'customer'. To check this make sure that the Developer tab in the Word ribbon is activated. Go to File->Options->Customize Ribbon  and make sure in the right panel that 'Developer' is selected.
 
-	![](Images/Fig14.png) 
+	![](https://github.com/OfficeDev/hands-on-labs/blob/master/O3652/O3652-2%20Deep%20Dive%20in%20Office%20Word%20Add-ins/Images/Fig14.png) 
 
 
 5. Then, while having the cursor within any 'Contoso' instance, click on the Developer tab and then on 'Properties'. You will see each content control has the 'customer' tag.
 
-	![](Images/Fig15.png) 
+	![](https://github.com/OfficeDev/hands-on-labs/blob/master/O3652/O3652-2%20Deep%20Dive%20in%20Office%20Word%20Add-ins/Images/Fig15.png) 
 
-6. Go back to the **Home.js** file in Visual Studio, make sure you are using the StatementOfWord project.
+6. CLose Word and go back to the **Home.js** file in Visual Studio. Make sure you are using the StatementOfWord project.
 
 7. Add the following code to the **onaddChangeCustomer** function:
 
-```javascript
-function onaddChangeCustomer() {
-Word.run(function (ctx) {
-            var ccs = ctx.document.contentControls.getByTag("customer");
-            ctx.load(ccs, { select: 'text', expand: 'font' }); // i want to change the font highlight color, so i need to expand font. note i can also do select" 'font/highlightColor', but not in the mood :)
-            return ctx.sync()  // lets get all the content controls with the above tag
-            .then(function () {
-                //lets iterate and change!!!
-                for (var i = 0; i < ccs.items.length; i++) {
-                    ccs.items[i].insertText("Fabrikam", "replace");
-                    ccs.items[i].font.highlightColor = "#FFFFFF";
-                }
+	```javascript
+	function onaddChangeCustomer() {
+	Word.run(function (ctx) {
+		    var ccs = ctx.document.contentControls.getByTag("customer");
+		    ctx.load(ccs, { select: 'text', expand: 'font' }); // i want to change the font highlight color, so i need to expand font. note i can also do select" 'font/highlightColor', but not in the mood :)
+		    return ctx.sync()  // lets get all the content controls with the above tag
+		    .then(function () {
+			//lets iterate and change!!!
+			for (var i = 0; i < ccs.items.length; i++) {
+			    ccs.items[i].insertText("Fabrikam", "replace");
+			    ccs.items[i].font.highlightColor = "#FFFFFF";
+			}
 
-            })
-            .then(function () { showNotification("Task Complete!"); })
-            .catch(function (myError) { showNotification("Error", myError.message); })
-        });
+		    })
+		    .then(function () { showNotification("Task Complete!"); })
+		    .catch(function (myError) { showNotification("Error", myError.message); })
+		});
 
 
-    } 
-```
+	    } 
+	```
 
-Note that the code is first getting all the content controls tagged as 'customer', then iterates each of the ocurrences and changes the content and the formatting information.
+	Note that the code is first getting all the content controls tagged as 'customer', then iterates each of the ocurrences and changes the content and the formatting information.
 
 8. Test your work by pressing F5 to start a debug session and then click the **Step 1: Starting SOW** button. After the document gets inserted, click on the  **Step 3: Search and Templetize!** to create a template. Now try your code by clicking on **Step 4: Replace Customer!** Each "Contoso" instance should be replaced with 'Fabrikam' and look like the following image:
 
-	![Final add-in result](Images/Fig16.png) 
+	![Final add-in result](assets/final-SOW.PNG) 
 	
 --
 
