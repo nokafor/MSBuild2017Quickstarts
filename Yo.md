@@ -21,10 +21,10 @@ Visual Studio Code
 	npm install -g yo generator-office
 	```
  
-3.	Use the following commands to change the directory to the C:/ folder. Then, create a folder called “myAddin”:
+3.	Use the following commands to change the directory to the C:\ folder. Then, create a folder called “myAddin”:
 	```
 	# Change directory
-	cd ../../
+	cd \
 
 	# Create new folder
 	mkdir myAddin
