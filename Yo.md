@@ -72,7 +72,7 @@ Visual Studio Code
 
 8.	Load the add-in into Office. The easiest way to do this is by sideloading the add-in in Office Online:
   
-    a.	[Click here to go to Excel Online](https://office.live.com/start/excel.aspx). Choose **Sign in with a work or school account** and sign in with the credentials on the back of your badge.
+    a.	[Copy the url to go to Excel Online](https://office.live.com/start/excel.aspx). Choose **Sign in with a work or school account** and sign in with the credentials at your station.
   
     b.	Create a blank workbook. Then go to **Insert > Office Add-ins**.
   
