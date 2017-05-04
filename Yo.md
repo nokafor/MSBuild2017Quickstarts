@@ -86,7 +86,7 @@ Visual Studio Code
 9. Your add-in will be loaded in Excel and a button will appear on the Home Tab ribbon. Click this button to reveal your add-in.
     > **Important**: Leave this Excel document open with the add-in loaded for the rest of the walkthrough.
 
-	![Screenshot of show taskpane button]()
+	![Screenshot of show taskpane button](assets/ribbon-button.png)
 	
 	![Screenshot of default add-in template in Office]()
 
