@@ -50,13 +50,13 @@ Visual Studio Code
 	  |Would you like to use TypeScript?|Yes <br> (Press Enter to accept the default)|
 	  |Choose a framework:|Jquery <br> (Press Enter to accept the default)|
   
-  	 ![Yo Office Screenshot](assets/yo-office.png)
+  	 ![Yo Office Screenshot](assets/yo-office.PNG)
 	 
 	  > If installing and running a Yeoman generator for the first time on your machine, you may be prompted to anonymously report usage statistics before Yo Office is launched. This allows the Yeoman team to continue to improve the platform and deliver the best services. We recommend allowing your data to be collected, but if you don’t feel comfortable sharing your data, feel free to decline.
    
 5. Once you have entered the above information, Yo Office will prompt you to open a resource page for more information and guidance.  **Choose Yes (press Enter to accept the default)**, and explore the plethora of resources available to Office add-in developers. In the background, Yo Office will continue to create your templates and install any remaining dependencies necessary for building the rest of your add-in. This may take a couple minutes. 
 
-	![resource page screenshot](assets/resource-page.png)
+	![resource page screenshot](assets/resource-page.PNG)
 
 6.	Host your add-in. Once Yo Office has finished running, you can host your add-in locally, or use any web server or hosting technology – just make sure that the add-in is served using HTTPS, and update the add-in’s source location in the manifest. For this walkthrough, host the add-in through npm using the following command:
 	```
