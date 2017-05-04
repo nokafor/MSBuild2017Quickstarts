@@ -80,8 +80,10 @@ Visual Studio Code
     
     ![insert dialog](assets/insert.png)
   
-    d.	In the Upload Add-in dialog, choose **Browse** and select the my-office-add-in-manifest.xml file from the *myAddin* folder in the C:/ directory. Then, choose **Upload**. You should see your add-in deploy in Excel and a button apear on the Home Tab. Click this button to reveal your add-in.
-    > **Important**: Leave this page open with the Excel loaded for the rest of the walkthrough.
+    d.	In the Upload Add-in dialog, choose **Browse** and select the my-office-add-in-manifest.xml file from the *myAddin* folder in the C:/ directory. Then, choose **Upload**. 
+
+9. Your add-in will deploy in Excel and a button will appear on the Home Tab ribbon. Click this button to reveal your add-in.
+    > **Important**: Leave this Excel document open with the add-in loaded for the rest of the walkthrough.
 
 	![Screenshot of show taskpane button]()
 	
