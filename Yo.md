@@ -97,6 +97,9 @@ Visual Studio Code
 	```
 	code .
 	```
+	
+	![VS code screenshot](assets/vs-code.PNG)
+	
 2. Take a look at the structure of your new add-in project in the Solution Explorer. The source files that define the web portion of the add-in are contained in the **src** folder. You should also observe that the root folder of the project contains a top-level manifest, *my-office-addin-manifest.xml*. Double click this file to open it in the editor. Browse through the file and note the different options you can set for your Add-in, such as provider, version, Display Name.
 
 3. Now, find the XML block that looks like this (line 75). Take a minute and read through it as it describes how add-ins can integrate with the Office UI. The example below demonstrates how an add-in can add a button to the Word ribbon's Home tab using Add-in commands. 
@@ -158,7 +161,8 @@ Visual Studio Code
 		<bt:String id="Contoso.TaskpaneButton.Label" DefaultValue="Hello World" />
 	```
 
-7.	Save the changes. Then, sideload the add-in into Excel again. The label of the button should be different.
+7. Save the changes (File > Save All). 
+8. Reopen the browser with Excel and sideload the add-in again (repeat steps 8b-8d). The label of the button should be different.
 	> Office only parses the manifest file when the add-in is loaded. Therefore, when you make updates to the manifest, you have to reload the add-in to see the changes reflected.
 
 	![Screenshot of updated button]()
