@@ -83,7 +83,7 @@ Visual Studio
 6. Save the file. Press *F5* (or click the "Start" button) to try your changes. If you're prompted to installed a self-signed certificate for localhost, accept the two dialogs. You should see your add-in deploy in Word and a button appear on the Home Tab. 
 
 
-	![Button on Ribbon](assets/new-button.png)
+	![Button on Ribbon](assets/word-button.png)
 
 
 7. Close Word to stop debugging. Then switch back to Visual Studio.
