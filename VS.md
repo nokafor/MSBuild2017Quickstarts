@@ -365,14 +365,14 @@ First, we are going to edit the JavaScript code in **Home.js**.
 
 	![Starting Statement of Work](assets/initial-SOW.PNG)
 	
-	Don't feel overhelmed with the OOXML file you inserted; if you want to master how to handle OOXML we recommend you to read the article at **msdn.microsoft.com/en-us/library/office/dn423225.aspx** article.Close Word to terminate your debugging session and return to Visual Studio.
+	Don't feel overhelmed with the OOXML file you inserted; if you want to master how to handle OOXML we recommend you to read the article at **msdn.microsoft.com/en-us/library/office/dn423225.aspx** article. Close Word to terminate your debugging session and return to Visual Studio.
 	
 
 ## Part 4: Replace image in document
 
 Notice how the inserted SOW has a badly formatted picture **highlighted in red below**. 
 
-![Highlighted bad image in SOW](Images/Fig11.png)
+![Highlighted bad image in SOW](assets/broken-image.png)
 
 Let's fix this image.
 
@@ -381,45 +381,45 @@ Let's fix this image.
 2. In the Solution Explorer, double-click on **Home.js** to open this JavaScript file.
 3. Add the following code snippet to the **onFixPicture** function.
 
-```javascript
-	 function onFixPicture() {
-        // my strategy to change the pic here is the following
-        //a. will get the collection of images within the body.
-        //b. will grab the first image within the collection and replace it with a new image.
+	```javascript
+	   function onFixPicture() {
+		// my strategy to change the pic here is the following
+		//a. will get the collection of images within the body.
+		//b. will grab the first image within the collection and replace it with a new image.
 
-        //this example is using methods shipped on the 1.2 requirement set. specificlaly the insertInlinePicture method supported on the inlinePicture object to replace the image.....
-        if (Office.context.requirements.isSetSupported("WordApi", "1.2")) {
-            Word.run(function (context) {
-                // gets the inlinePictures collection for the document.
-                var pics = context.document.body.inlinePictures;
-                context.load(pics);
-                return context.sync()
-                    .then(function () {
-                        var mybase64 = getImageAsBase64();
-                        pics.items[0].insertInlinePictureFromBase64(mybase64, "replace");
-                        return context.sync()
-                            .then(function () {
-                                showNotification("Task Complete!");
-                            })
-                    })
-            })
-            .catch(function (myError) {
-                //otherwise we handle the exception here!
-                showNotification("Error", myError.message);
-            })
-        }
-        else {
-            showNotification("Error. This functionality requires Word with at least January update!! (check  builds 6741+)");
-        }
-    }
-```
+		//this example is using methods shipped on the 1.2 requirement set. specificlaly the insertInlinePicture method supported on the inlinePicture object to replace the image.....
+		if (Office.context.requirements.isSetSupported("WordApi", "1.2")) {
+		    Word.run(function (context) {
+			// gets the inlinePictures collection for the document.
+			var pics = context.document.body.inlinePictures;
+			context.load(pics);
+			return context.sync()
+			    .then(function () {
+				var mybase64 = getImageAsBase64();
+				pics.items[0].insertInlinePictureFromBase64(mybase64, "replace");
+				return context.sync()
+				    .then(function () {
+					showNotification("Task Complete!");
+				    })
+			    })
+		    })
+		    .catch(function (myError) {
+			//otherwise we handle the exception here!
+			showNotification("Error", myError.message);
+		    })
+		}
+		else {
+		    showNotification("Error. This functionality requires Word with at least January update!! (check  builds 6741+)");
+		}
+	    }
+	```
 
-Note that the code is checking if the host (Word) actually supports the 1.2 requirements set. This is important to check because in order to replace an image, the  **inlinePicture.insertInlinePictureFromBase64** method is needed and this was shipped as part of the 1.2 requirement set. Note that by traversing the **inlinePictures collection**, we get the first image and then we are replacing it with the correct one.
+	Note that the code is checking if the host (Word) actually supports the 1.2 requirements set. This is important to check because in order to replace an image, the  **inlinePicture.insertInlinePictureFromBase64** method is needed and this was shipped as part of the 1.2 requirement set. Note that by traversing the **inlinePictures collection**, we get the first image and then we are replacing it with the correct one.
 	
 
 4. Test your work by pressing F5 to start a debug session and then click the **Step 1: Starting SOW** button. After the document gets inserted click on the  **Step 2: Fix Picture!** button to try your code. The image should be replaced and the document should look like this:
 
-	![Fixed Image in Content](Images/Fig10.png) 
+	![Fixed Image in Content](assets/fixed-image.PNG) 
 
 
 ## Part 5: Search and insert Content Controls
