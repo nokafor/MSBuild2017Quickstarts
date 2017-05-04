@@ -307,7 +307,7 @@ First, let's add logic to the **app.ts** file to write data to the workbook.
 
 	This will create an array of sample data, and write the sample data (with basic formatting) to the specified range in the worksheet. It will also display notifications within the add-in. 
 
-3. Update the click handler in the **Office.initialize** function to the following.
+3. Update the click handler in the **Office.initialize** function (line 10) to the following.
 	```javascript
 	$("#run").click(createReport);
 	```
