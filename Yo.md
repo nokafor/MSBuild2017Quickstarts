@@ -99,7 +99,7 @@ Visual Studio Code
 	```
 2. Take a look at the structure of your new add-in project in the Solution Explorer. The source files that define the web portion of the add-in are contained in the **src** folder. You should also observe that the root folder of the project contains a top-level manifest, *my-office-addin-manifest.xml*. Double click this file to open it in the editor. Browse through the file and note the different options you can set for your Add-in, such as provider, version, Display Name.
 
-3. Now, find the XML block that looks like this. Take a minute and read through it as it describes how add-ins can integrate with the Office UI. The example below demonstrates how an add-in can add a button to the Word ribbon's Home tab using Add-in commands. 
+3. Now, find the XML block that looks like this (line 75). Take a minute and read through it as it describes how add-ins can integrate with the Office UI. The example below demonstrates how an add-in can add a button to the Word ribbon's Home tab using Add-in commands. 
 
 	```XML
         <!-- PrimaryCommandSurface==Main Office Ribbon. -->
@@ -145,13 +145,13 @@ Visual Studio Code
             </ExtensionPoint>
 	```
 
-4. Let's modify the button to say "Hello World" instead of "Show Taskpane". Find the following element in the file.
+4. Let's modify the button to say "Hello World" instead of "Show Taskpane". Find the following element in the file (line 92).
 
 	```XML
 		<Title resid="Contoso.TaskpaneButton.Label" />
 	```
 	This indicates that the label of the title is stored in a string resource named **Contoso.TaskpaneButton.Label**.
-5. Scroll down until you find the **ShortString** string resource with that label.
+5. Scroll down until you find the **ShortString** string resource with that label (line 133).
 6. Now, set the DefaultValue attribute to *Hello World*. Your XML should look like this: 
 
 	```XML
