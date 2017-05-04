@@ -468,7 +468,7 @@ First, let's add logic to the **app.ts** file to write data to the workbook.
 ## Part 4: Add a chart bound to that data
 A common scenario in Excel is binding charts to data. *(Why?)* Let’s add a chart that is bound to our data. 
 
-1. Reopen the **app.ts** file in the src folder, and add the following code to the end of the **WriteSheetData** function:
+1. Go to Visual Studio Code and reopen the **app.ts** file in the src folder, and add the following code to the end of the **WriteSheetData** function:
 	```javascript
 		// Add a new chart
 		const chart = sheet.charts.add(
