@@ -81,9 +81,9 @@ Visual Studio Code
     
     ![insert dialog](assets/insert.png)
   
-    d.	In the Upload Add-in dialog, choose **Browse** and select the my-office-add-in-manifest.xml file in C:\myAddin\. Then, choose **Upload**. 
+    d.	In the Upload Add-in dialog, choose **Browse** and select the *my-office-add-in-manifest.xml* file in the C:\myAddin\  directory. Then, choose **Upload**. 
 
-9. Your add-in will deploy in Excel and a button will appear on the Home Tab ribbon. Click this button to reveal your add-in.
+9. Your add-in will be loaded in Excel and a button will appear on the Home Tab ribbon. Click this button to reveal your add-in.
     > **Important**: Leave this Excel document open with the add-in loaded for the rest of the walkthrough.
 
 	![Screenshot of show taskpane button]()
@@ -92,7 +92,7 @@ Visual Studio Code
 
 ## Part 2: Customize the Office Ribbon UI
 
-1. Open a new command prompt, and change the current directory to the myAddin folder. Run the following command to open your project folder in Visual Studio Code.
+1. Open a new command prompt, and change the current directory to the C:\myAddin folder. Run the following command to open your project folder in Visual Studio Code.
 
 	```
 	code .
