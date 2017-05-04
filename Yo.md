@@ -165,7 +165,7 @@ Visual Studio Code
 8. Switch back to the browser with Excel and sideload the add-in again (repeat steps 8b-8d). The label of the button should now say "Hello World".
 	> Office only parses the manifest file when the add-in is loaded. Therefore, when you make updates to the manifest, you have to reload the add-in to see the changes reflected.
 
-	![Screenshot of updated button]()
+	![Screenshot of updated button](assets/helloworld-yo.png)
 
 ## Part 3: Write data to workbook
 Now, let's move on to add functionality to the add-in. Go back to the project in Visual Studio Code. There are two very important files that are in the **src** folder of the project. One of them is the index.html page, which represents the add-in's starting page. Double click **index.html** in the Solution Explorer to open it in a code editor window. You will see some HTML that begins like this:
