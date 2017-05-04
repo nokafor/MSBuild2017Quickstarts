@@ -161,8 +161,8 @@ Visual Studio Code
 		<bt:String id="Contoso.TaskpaneButton.Label" DefaultValue="Hello World" />
 	```
 
-7. Save the changes (File > Save All). 
-8. Reopen the browser with Excel and sideload the add-in again (repeat steps 8b-8d). The label of the button should be different.
+7. Go to **File > Save All** to save the changes. 
+8. Switch back to the browser with Excel and sideload the add-in again (repeat steps 8b-8d). The label of the button should now say "Hello World".
 	> Office only parses the manifest file when the add-in is loaded. Therefore, when you make updates to the manifest, you have to reload the add-in to see the changes reflected.
 
 	![Screenshot of updated button]()
