@@ -78,7 +78,7 @@ Visual Studio Code
   
     c.	On the **My Add-ins** tab, click the link in the upper-right corner of the dialog box to **Manage My Add-ins**. This will open a menu where you can then choose **Upload My Add-in**.
     
-    ![insert dialog]()
+    ![insert dialog](assets/insert.png)
   
     d.	In the Upload Add-in dialog, choose **Browse** and select the my-office-add-in-manifest.xml file from the *myAddin* folder in the C:/ directory. Then, choose **Upload**. You should see your add-in deploy in Excel and a button apear on the Home Tab. Click this button to reveal your add-in.
     > **Important**: Leave this page open with the Excel loaded for the rest of the walkthrough.
@@ -93,7 +93,7 @@ Visual Studio Code
 
 	```
 	code .
-	```
+	```ins
 2. Take a look at the structure of your new add-in project in the Solution Explorer. The source files that define the web portion of the add-in are contained in the **src** folder. You should also observe that the root folder of the project contains a top-level manifest, *my-office-addin-manifest.xml*. Double click this file to open it in the editor. Browse through the file and note the different options you can set for your Add-in, such as provider, version, Display Name.
 
 3. Now, find the XML block that looks like this. Take a minute and read through it as it describes how add-ins can integrate with the Office UI. The example below demonstrates how an add-in can add a button to the Word ribbon's Home tab using Add-in commands. 
