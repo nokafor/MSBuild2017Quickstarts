@@ -161,7 +161,7 @@ Visual Studio Code
 	![Screenshot of updated button]()
 
 ## Part 3: Write data to workbook
-Now, let's move on to add functionality to the add-in. There are two very important files that are in the **src** folder of the project. One of them is the *index.html* page, which represents the add-in's starting page. Double click **index.html** in the Solution Explorer to open it in a code editor window. You will see some HTML that begins like this:
+Now, let's move on to add functionality to the add-in. There are two very important files that are in the **src** folder of the project. One of them is the index.html page, which represents the add-in's starting page. Double click **index.html** in the Solution Explorer to open it in a code editor window. You will see some HTML that begins like this:
 
 ```html
 <head>
@@ -187,7 +187,7 @@ Now, let's move on to add functionality to the add-in. There are two very import
 </head>
 ```
 
-There are important references included in the **index.html** head element. One for our Office.js library **<script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.debug.js"></script>**, which enables the developer to interact with Excel. There is also a reference to include  Office UI Fabric components, which are the styles that provide building blocks for UI optimized for Office to make your add-in look great. If you scroll to the bottom of the html page, you will also see a reference to the **app.js** script at the end of the body element, which implements the logic of the add-in.
+There are important references included in the **index.html** head element. One for our Office.js library **<script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.debug.js"></script>**, which enables the developer to interact with Excel. There is also a reference to include  Office UI Fabric components, which are the UI building blocks, optimized for Office, to make your add-in look great. If you scroll to the bottom of the html page, you will also see a reference to the **app.js** script at the end of the body element, which implements the logic of the add-in.
  
 First, let's add logic to the **app.ts** file to write data to the workbook.
 
@@ -283,9 +283,22 @@ First, let's add logic to the **app.ts** file to write data to the workbook.
 		    .format.columnWidth = minColumnWidth;
 	    }
 	}
+	
+	/**
+	 * Display the notification having synced the changes.
+	 */
+	function showNotification(message: string) {
+	    const messageBanner = $('.ms-MessageBanner');
+	    $('.ms-MessageBanner-clipper').text(message);
+	    $('.ms-MessageBanner-close').click(() => {
+		messageBanner.hide();
+		messageBanner.off('click');
+	    });
+	    messageBanner.show();
+	}
 	 ```
 
-	This will create an array of sample data, and write the sample data to the specified range in the worksheet. It will also apply basic formatting to the table. 
+	This will create an array of sample data, and write the sample data (with basic formatting) to the specified range in the worksheet. It will also display notifications within the add-in. 
 
 3. Update the click handler in the **Office.initialize** function to the following.
 	```javascript
@@ -439,11 +452,11 @@ First, let's add logic to the **app.ts** file to write data to the workbook.
 	    </main>
 	```
 
-6. Let's check out our progress! Save the index.html file. Then, go to the Excel page that contains your add-in. The add-in should have automatically updated to reflect the changes. This is done through [Browsersync](https://browsersync.io/).
+6. Let's check out our progress! Save the index.html file. Then, go to the Excel page that contains your add-in. Click your **Hello World** button in the ribbon to refresh the add-in.
 
 7. Click **Create Report**. A sample sales report split by quarters, for several products should load into your Excel file like this: 
 
-	![Screenshot of generated report]()
+	![Screenshot of generated report](assets/sales-report.PNG)
 
 ## Part 4: Add a chart bound to that data
 A common scenario in Excel is binding charts to data. *(Why?)* Let’s add a chart that is bound to our data. 
@@ -545,9 +558,10 @@ A common scenario in Excel is binding charts to data. *(Why?)* Let’s add a cha
 	    }
 	```
 
-2. Save the app.ts file and wait for the add-in to refresh. Then, click **Create Report** to run your add-in. You should see the same table from Part 3, but now with a chart below it. Since the chart is bound to the data, if you modify the table, the chart will also update. 
+2. Save the app.ts file. Then, open Excel and press your **Hello World** button to refresh the add-in.
+3. Click **Create Report** to run your add-in. You should see the same table from Part 3, but now with a chart below it. Since the chart is bound to the data, if you modify the table, the chart will also update. 
 
-	![Screenshot of final result]()
+	![Screenshot of final result](assets/chart.PNG)
 
 --
 
