@@ -81,7 +81,7 @@ Visual Studio Code
     
     ![insert dialog](assets/insert.png)
   
-    d.	In the Upload Add-in dialog, choose **Browse** and select the my-office-add-in-manifest.xml file from the *myAddin* folder in the C:\ directory. Then, choose **Upload**. 
+    d.	In the Upload Add-in dialog, choose **Browse** and select the my-office-add-in-manifest.xml file in C:\myAddin\. Then, choose **Upload**. 
 
 9. Your add-in will deploy in Excel and a button will appear on the Home Tab ribbon. Click this button to reveal your add-in.
     > **Important**: Leave this Excel document open with the add-in loaded for the rest of the walkthrough.
