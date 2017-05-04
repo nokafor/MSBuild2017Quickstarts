@@ -54,7 +54,7 @@ Visual Studio Code
 	 
 	  > If installing and running a Yeoman generator for the first time on your machine, you may be prompted to anonymously report usage statistics before Yo Office is launched. This allows the Yeoman team to continue to improve the platform and deliver the best services. We recommend allowing your data to be collected, but if you don’t feel comfortable sharing your data, feel free to decline.
    
-5. Once you have entered the above information, Yo Office will prompt you to open a resource page for more information and guidance.  **Choose Yes (press Enter to accept the default)**, and explore the plethora of resources available to Office add-in developers. In the background, Yo Office will continue to create your templates and install any remaining dependencies necessary for building the rest of your add-in. This may take a couple minutes. 
+5. Once you have entered the above information, Yo Office will prompt you to open a resource page for more information and guidance.  **Choose Yes (press Enter to accept the default)**, and explore the plethora of resources available to Office add-in developers. In the background, Yo Office will continue to create your templates and install any remaining dependencies necessary for building the rest of your add-in. 
 
 	![resource page screenshot](assets/resource-page.PNG)
 
