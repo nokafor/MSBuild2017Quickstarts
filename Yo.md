@@ -88,7 +88,7 @@ Visual Studio Code
 
 	![Screenshot of show taskpane button](assets/ribbon-button.png)
 	
-	![Screenshot of default add-in template in Office]()
+	![Screenshot of default add-in template in Office](assets/default-template.png)
 
 ## Part 2: Customize the Office Ribbon UI
 
