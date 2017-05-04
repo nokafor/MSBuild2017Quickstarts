@@ -14,17 +14,17 @@ Visual Studio Code
 
 1.	Search for and open the command prompt. 
 
-	![Command Prompt Screenshot]() 
+	![Command Prompt Screenshot](assets/command-prompt.png) 
 
 2.	Run the following command to install Yo Office and its dependencies: 
 	```
 	npm install -g yo generator-office
 	```
  
-3.	Use the following commands to change the directory to the Documents folder, then create a folder called “myAddin”:
+3.	Use the following commands to change the directory to the C:/ folder. Then, create a folder called “myAddin”:
 	```
 	# Change directory
-	cd Documents
+	cd ../../
 
 	# Create new folder
 	mkdir myAddin
@@ -39,8 +39,7 @@ Visual Studio Code
 	 # Run Yo Office
 	 yo office
 	 ```
-	 
-	 On first launch, you may be prompted to anonymously report usage statistics. This allows the Yeoman team to continue to improve the platform and allow us to deliver the best services. We recommend allowing your data to be collected, but if you don’t feel comfortable sharing your data, feel free to decline. Once past this, Yo Office will launch and prompt you with the following questions: 
+	 Yo Office will launch and prompt you with the following questions: 
   
 	  |Question|Answer|
 	  |-|-|
@@ -51,9 +50,13 @@ Visual Studio Code
 	  |Would you like to use TypeScript?|Yes <br> (Press Enter to accept the default)|
 	  |Choose a framework:|Jquery <br> (Press Enter to accept the default)|
   
-  	 ![Yo Office Screenshot]()
+  	 ![Yo Office Screenshot](assets/yo-office.png)
+	 
+	  > If installing and running a Yeoman generator for the first time on your machine, you may be prompted to anonymously report usage statistics before Yo Office is launched. This allows the Yeoman team to continue to improve the platform and deliver the best services. We recommend allowing your data to be collected, but if you don’t feel comfortable sharing your data, feel free to decline.
    
-5. Once you have entered the above information, Yo Office will prompt you to open a resource page for more information and guidance. When developing an Office add-in on your own, the resource page provides a useful guide for the various stages in the Office development process. Choose Yes (press Enter to accept the default), and explore the plethora of resources available to Office add-in developers. In the background, Yo Office will continue to create your templates and install any remaining dependencies necessary for building the rest of your add-in. This may take a couple minutes. 
+5. Once you have entered the above information, Yo Office will prompt you to open a resource page for more information and guidance.  **Choose Yes (press Enter to accept the default)**, and explore the plethora of resources available to Office add-in developers. In the background, Yo Office will continue to create your templates and install any remaining dependencies necessary for building the rest of your add-in. This may take a couple minutes. 
+
+	![resource page screenshot](assets/resource-page.png)
 
 6.	Host your add-in. Once Yo Office has finished running, you can host your add-in locally, or use any web server or hosting technology – just make sure that the add-in is served using HTTPS, and update the add-in’s source location in the manifest. For this walkthrough, host the add-in through npm using the following command:
 	```
