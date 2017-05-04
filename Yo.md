@@ -72,13 +72,15 @@ Visual Studio Code
 
 6.	Load the add-in into Office. The easiest way to do this is by sideloading the add-in in Office Online:
   
-    a.	[Click here to go to Excel Online](https://office.live.com/start/excel.aspx) and create a blank workbook. You will be required to sign in with your work, school, or Microsoft account.
+    a.	[Click here to go to Excel Online](https://office.live.com/start/excel.aspx). Choose **Sign in with a work or school account** and sign in with the credentials on the back of your badge.
   
-    b.	Go to **Insert > Office Add-ins**
+    b.	Create a blank workbook. Then go to **Insert > Office Add-ins**.
   
-    c.	On the My Add-ins tab (or My Organization tab if you're signed in to a work or school account), you will see a link in the upper-right corner of the dialog box to **Upload My Add-in** or **Manage My Add-ins**. Manage My Add-ins will open a menu where you can then choose Upload My Add-in.
+    c.	On the **My Add-ins** tab, click the link in the upper-right corner of the dialog box to **Manage My Add-ins**. This will open a menu where you can then choose **Upload My Add-in**.
+    
+    ![insert dialog]()
   
-    d.	In the Upload Add-in dialog, choose **Browse** and select the my-office-add-in-manifest.xml file from the “myAddin” folder in Documents. Then, choose **Upload**. You should see your add-in deploy in Excel and a button apear on the Home Tab.
+    d.	In the Upload Add-in dialog, choose **Browse** and select the my-office-add-in-manifest.xml file from the *myAddin* folder in the C:/ directory. Then, choose **Upload**. You should see your add-in deploy in Excel and a button apear on the Home Tab. Click this button to reveal your add-in.
     > **Important**: Leave this page open with the Excel loaded for the rest of the walkthrough.
 
 	![Screenshot of show taskpane button]()
