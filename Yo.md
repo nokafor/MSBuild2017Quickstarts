@@ -168,7 +168,7 @@ Visual Studio Code
 	![Screenshot of updated button]()
 
 ## Part 3: Write data to workbook
-Now, let's move on to add functionality to the add-in. There are two very important files that are in the **src** folder of the project. One of them is the index.html page, which represents the add-in's starting page. Double click **index.html** in the Solution Explorer to open it in a code editor window. You will see some HTML that begins like this:
+Now, let's move on to add functionality to the add-in. Go back to the project in Visual Studio Code. There are two very important files that are in the **src** folder of the project. One of them is the index.html page, which represents the add-in's starting page. Double click **index.html** in the Solution Explorer to open it in a code editor window. You will see some HTML that begins like this:
 
 ```html
 <head>
