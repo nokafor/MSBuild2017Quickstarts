@@ -146,7 +146,6 @@ First, we are going to edit the JavaScript code in **Home.js**.
 		    $("#insert-content").click(insertContent);
 		    $("#add-content-controls").click(addContentControls);
 		    $("#change-customer").click(changeCustomer);
-		    $("#add-footer").click(addFooter); 
 		});
 	    };
 
@@ -164,11 +163,6 @@ First, we are going to edit the JavaScript code in **Home.js**.
 	    function changeCustomer() {
 
 	    }
-
-	    function addFooter() {
-
-	    }
-	    
 	})();
 
 	```
@@ -251,7 +245,6 @@ First, we are going to edit the JavaScript code in **Home.js**.
 		    $("#insert-content").click(insertContent);
 		    $("#add-content-controls").click(addContentControls);
 		    $("#change-customer").click(changeCustomer);
-		    $("#add-footer").click(addFooter);    
 		});
 	    };
 
@@ -309,10 +302,6 @@ First, we are going to edit the JavaScript code in **Home.js**.
 	    function changeCustomer() {
 
 	    }
-
-	    function addFooter() {
-
-	    }
 	})();
 
 	 
@@ -336,9 +325,6 @@ First, we are going to edit the JavaScript code in **Home.js**.
             </button><br><br>
             <button class="ms-Button ms-Button--compound" id="change-customer">
                 <span class="ms-Button-label">3. Change Customer</span><span class="ms-Button-description">Set the customer name to 'Fabrikam' using the added content controls</span>
-            </button><br><br>
-            <button class="ms-Button ms-Button--compound" id="add-footer">
-                <span class="ms-Button-label">4. Insert Footer</span><span class="ms-Button-description">Add a "Confidential "footer to the document </span>
             </button><br><br>
         </div>
    </div>
