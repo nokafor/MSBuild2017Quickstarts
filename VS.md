@@ -328,179 +328,106 @@ First, we are going to edit the JavaScript code in **Home.js**.
 	```html
    <div id="content-main">
         <div id="sowPanel" class="padding">
-            <button class="ms-Button ms-Button--compound" id="addContentStartingSOW">
-                <span class="ms-Button-label" id="button-text">Step 1: Starting SOW</span>
-                <span class="ms-Button-description" id="button-desc">Insert a starting document to play with. uses OOXML</span>
+            <button class="ms-Button ms-Button--compound" id="insert-content">
+                <span class="ms-Button-label">1. Add Content </span><span class="ms-Button-description">Adds a Title at the beginning of the document. Followed by paragraphs with different styles, content controls, and a page break.</span>
+            </button><br /><br>
+            <button class="ms-Button ms-Button--compound" id="add-content-controls">
+                <span class="ms-Button-label">2. Search & Templetize</span><span class="ms-Button-description">Search for "Contractor" and insert content controls to hold the customer name</span>
             </button><br><br>
-
-            <button class="ms-Button ms-Button--compound" id="addPicture">
-                <span class="ms-Button-label" id="button-text">Step 2: Fix Picture!</span>
-                <span class="ms-Button-description" id="button-desc">How to insert or replace images in a document.</span>
+            <button class="ms-Button ms-Button--compound" id="change-customer">
+                <span class="ms-Button-label">3. Change Customer</span><span class="ms-Button-description">Set the customer name to 'Fabrikam' using the added content controls</span>
             </button><br><br>
-
-            <button class="ms-Button ms-Button--compound" id="addSearchAndTempletize">
-                <span class="ms-Button-label" id="button-text">Step 3: Search and Templetize!</span>
-                <span class="ms-Button-description" id="button-desc">Search for 'Contoso' and insert content controls to hold the customer name. </span>
-            </button><br><br>
-
-            <button class="ms-Button ms-Button--compound" id="addChangeCustomer">
-                <span class="ms-Button-label" id="button-text">Step 4: Replace Customer!</span>
-                <span class="ms-Button-description" id="button-desc">Set the customer name to 'Fabrikam' using content controls.</span>
+            <button class="ms-Button ms-Button--compound" id="add-footer">
+                <span class="ms-Button-label">4. Insert Footer</span><span class="ms-Button-description">Add a "Confidential "footer to the document </span>
             </button><br><br>
         </div>
+   </div>
 	```
 
 8. Save and close **Home.html**.
 
 9. Let's try the add-in to see the progress. Press the **{F5}** key to run the project in the Visual Studio debugger. The debugger should launch Word 2016. 
-	> **Note**: Once Word opens, make sure you launch your add-in by clicking on the **Show Taskpane** button on the ribbon. You will have to repeat this operation each time you hit F5. 
+	> **Note**: Once Word opens, make sure you launch your add-in by clicking on the **Statement of Work** button on the ribbon. You will have to repeat this operation each time you hit F5. 
 
 10. After you click on this button you should see your Office Add-in in the task pane on the right side of a new Word document, as shown in the following screenshot.
 
 	![Add-in Template Screenshot](assets/default-word.png)
 
-11. Click the **Step 1: Starting SOW** button. When you click the button, you should see that the starting Statement of Work has been added to the Word document.
+11. Click the **1. Add Content** button. When you click the button, you should see that the starting Statement of Work has been added to the Word document.
 
 	![Starting Statement of Work](assets/initial-SOW.PNG)
 	
-	Don't feel overhelmed with the OOXML file you inserted; if you want to master how to handle OOXML we recommend you to read the article at **msdn.microsoft.com/en-us/library/office/dn423225.aspx** article. Close Word to terminate your debugging session and return to Visual Studio.
-	
-
-## Part 4: Replace image in document
-
-Notice how the inserted SOW has a badly formatted picture **highlighted in red below**. 
-
-![Highlighted bad image in SOW](assets/broken-image.png)
-
-Let's fix this image.
-
-1. Go back to Visual Studio, make sure you are using the StatementOfWork project.
-
-2. In the Solution Explorer, double-click on **Home.js** to open this JavaScript file.
-3. Add the following code snippet to the **onFixPicture** function.
-
-	```javascript
-	   function onFixPicture() {
-		// my strategy to change the pic here is the following
-		//a. will get the collection of images within the body.
-		//b. will grab the first image within the collection and replace it with a new image.
-
-		//this example is using methods shipped on the 1.2 requirement set. specificlaly the insertInlinePicture method supported on the inlinePicture object to replace the image.....
-		if (Office.context.requirements.isSetSupported("WordApi", "1.2")) {
-		    Word.run(function (context) {
-			// gets the inlinePictures collection for the document.
-			var pics = context.document.body.inlinePictures;
-			context.load(pics);
-			return context.sync()
-			    .then(function () {
-				var mybase64 = getImageAsBase64();
-				pics.items[0].insertInlinePictureFromBase64(mybase64, "replace");
-				return context.sync()
-				    .then(function () {
-					showNotification("Task Complete!");
-				    })
-			    })
-		    })
-		    .catch(function (myError) {
-			//otherwise we handle the exception here!
-			showNotification("Error", myError.message);
-		    })
-		}
-		else {
-		    showNotification("Error. This functionality requires Word with at least January update!! (check  builds 6741+)");
-		}
-	    }
-	```
-
-	Note that the code is checking if the host (Word) actually supports the 1.2 requirements set. This is important to check because in order to replace an image, the  **inlinePicture.insertInlinePictureFromBase64** method is needed and this was shipped as part of the 1.2 requirement set. Note that by traversing the **inlinePictures collection**, we get the first image and then we are replacing it with the correct one.
-	
-
-4. Test your work by pressing F5 to start a debug session and then click the **Step 1: Starting SOW** button. After the document gets inserted click on the  **Step 2: Fix Picture!** button to try your code. The image should be replaced and the document should look like this:
-
-	![Fixed Image in Content](assets/fixed-image.PNG) 
 
 
-## Part 5: Search and insert Content Controls
+## Part 4: Search and insert Content Controls
 
 A common scenario in Word development is reusing documents to create new ones. A "Statement of Work" (SOW) is a very good example of this. By replacing a few fields, an existing SOW may be a completely new SOW instance. This is done through Content Controls. Content controls are a key building block in Word development and using them enables developers to insert 'placeholders' in the document that can be later identified and replaced with different content.
 
 To illustrate that point, we will implement a simple example of how a template can be created. Then, we will replace the content of all content controls tagged as 'customer' with 'Fabrikam'. Note that this could very well come from data stored in an external system, like a CRM, ERP, etc. The idea is to generate a new instance of a document with a new customer.
 
-1. Go back to Visual Studio, and in the Solution Explorer, double-click on **Home.js** to open this JavaScript file.
-2. Add the following code to the **onSearchAndTempletize** function:
+1. Close Word to terminate your debugging session and return to Visual Studio. In the Solution Explorer, double-click on **Home.js** to open this JavaScript file.
+2. Add the following code to the **addContentControls** function:
 
 	```javascript
-	function onSearchAndTempletize() {
-		// on this method I actually want to create kind of a template. Will start by searching "Contoso". Then I will wrap each instance with a content control
-		// I will also change the format of each search instance...
-
-		Word.run(function (ctx) {
-		    var results = ctx.document.body.search("Contoso");
-		    ctx.load(results);
-		    // we need to sync to get the search results/
-		    return ctx.sync()
-		    .then(function () {
-			//once we have the results we navigate through each occurrence and change a few things, as well as wrapping with a content control.
+	function addContentControls() {
+		Word.run(function (context) {
+		    //we first search for the "Contractor string"
+		    var results = context.document.body.search("Contractor");
+		    context.load(results);
+		    return context.sync().then(function () {
+			// Once we have the results, we iterate  
 			for (var i = 0; i < results.items.length; i++) {
-			    results.items[i].font.color = "#FF0000"    // Change color to Red
 			    results.items[i].font.highlightColor = "#FFFF00";
 			    results.items[i].font.bold = true;
 			    var cc = results.items[i].insertContentControl();
-			    cc.tag = "customer";  // this is an important piece of code, later on the exercise I will retrieve all the content controls with this tag and replace the content.
+			    cc.tag = "customer";  // This value is used in another part of this sample.
 			    cc.title = "Customer Name";
 			}
-			return ctx.sync()  // OK ready! lets send it to the host for processing :)
+			return context.sync();
 		    })
-		    .then(function () {
-			showNotification("Task Complete!");
-		    })
-		    .catch(function (myError) {
-			showNotification("Error", myError.message);
-		    })
+			.catch(console.log);
 		});
 
 
 	    } 
 	```
 	
-	Note that the code is searching for "Contoso". The search method returns a collection of ranges matching the search criteria. The code iterates through that collection and wraps each instance with a content control. It is also important to note that you are adding to each content control a tag with a "customer" title. This is important as we will use this information to replace the content of all the content controls with this tag with a new customer's name.  
+	Note that the code is searching for "Contractor". The search method returns a collection of ranges matching the search criteria. The code iterates through that collection and wraps each instance with a content control. It is also important to note that you are adding to each content control a tag with a "customer" title. This is important as we will use this information to replace the content of all the content controls with this tag with a new customer's name.  
 
-3. Test your work by pressing F5 to start a debug session and then click the **Step 1: Starting SOW** button. After the starting document gets inserted, click on the  **Step 3: Search and Templetize!** button to try your code. Each "Contoso" instance should be wrapped with a content control and with a yellow highlight. For visibility purposes we are also adding a red font color and yellow highlight to each search result instance. Your document should look like this after you click on the Step 1 and Step 3 buttons:
+3. Test your work by pressing F5 to start a debug session and then click the **1. Add Content** button. After the starting document gets inserted, click on the  **2. Search & Templetize** button to try your code. Each "Contractor" instance should be wrapped with a content control and with a yellow highlight. For visibility purposes we are also adding a red font color and yellow highlight to each search result instance. Your document should look like this after you click on the Step 1 and Step 2 buttons:
 
 
 	![SOW Template](assets/initial-template.PNG) 
 	
 
 
-4. Make sure to select any of the 'Contoso' search instances and verify they were tagged as 'customer'. To check this make sure that the Developer tab in the Word ribbon is activated. Go to File->Options->Customize Ribbon  and make sure in the right panel that 'Developer' is selected.
+4. Make sure to select any of the 'Contractor' search instances and verify they were tagged as 'customer'. To check this make sure that the Developer tab in the Word ribbon is activated. Go to File->Options->Customize Ribbon  and make sure in the right panel that 'Developer' is selected.
 
 	![](https://github.com/OfficeDev/hands-on-labs/blob/master/O3652/O3652-2%20Deep%20Dive%20in%20Office%20Word%20Add-ins/Images/Fig14.png) 
 
 
-5. Then, while having the cursor within any 'Contoso' instance, click on the Developer tab and then on 'Properties'. You will see each content control has the 'customer' tag.
+5. Then, while having the cursor within any 'Contractor' instance, click on the Developer tab and then on 'Properties'. You will see each content control has the 'customer' tag.
 
 	![](https://github.com/OfficeDev/hands-on-labs/blob/master/O3652/O3652-2%20Deep%20Dive%20in%20Office%20Word%20Add-ins/Images/Fig15.png) 
 
-6. CLose Word and go back to the **Home.js** file in Visual Studio. Make sure you are using the StatementOfWord project.
+6. Close Word and go back to the **Home.js** file in Visual Studio. Make sure you are using the StatementOfWork project.
 
-7. Add the following code to the **onaddChangeCustomer** function:
+7. Add the following code to the **changeCustomer** function:
 
 	```javascript
-	function onaddChangeCustomer() {
-	Word.run(function (ctx) {
-		    var ccs = ctx.document.contentControls.getByTag("customer");
-		    ctx.load(ccs, { select: 'text', expand: 'font' }); // i want to change the font highlight color, so i need to expand font. note i can also do select" 'font/highlightColor', but not in the mood :)
-		    return ctx.sync()  // lets get all the content controls with the above tag
-		    .then(function () {
-			//lets iterate and change!!!
-			for (var i = 0; i < ccs.items.length; i++) {
-			    ccs.items[i].insertText("Fabrikam", "replace");
-			    ccs.items[i].font.highlightColor = "#FFFFFF";
-			}
-
-		    })
-		    .then(function () { showNotification("Task Complete!"); })
-		    .catch(function (myError) { showNotification("Error", myError.message); })
+	function changeCustomer() {
+		Word.run(function (context) {
+		    // Get all the tagged content controls.
+		    var contentControls = context.document.contentControls.getByTag("customer");
+		    context.load(contentControls, { select: 'text', expand: 'font' });
+		    return context.sync()
+			.then(function () {
+			    for (var i = 0; i < contentControls.items.length; i++) {
+				contentControls.items[i].insertText("Fabrikam", "replace");
+			    }
+			    return context.sync();
+			})
+			.catch(console.log);
 		});
 
 
@@ -509,7 +436,7 @@ To illustrate that point, we will implement a simple example of how a template c
 
 	Note that the code is first getting all the content controls tagged as 'customer', then iterates each of the ocurrences and changes the content and the formatting information.
 
-8. Test your work by pressing F5 to start a debug session and then click the **Step 1: Starting SOW** button. After the document gets inserted, click on the  **Step 3: Search and Templetize!** to create a template. Now try your code by clicking on **Step 4: Replace Customer!** Each "Contoso" instance should be replaced with 'Fabrikam' and look like the following image:
+8. Test your work by pressing F5 to start a debug session and then click the **1. Add Content** button. After the document gets inserted, click on the  **2. Search & Templetize** to create a template. Now try your code by clicking on **3. Change Customer** Each "Contractor" instance should be replaced with 'Fabrikam' and look like the following image:
 
 	![Final add-in result](assets/final-SOW.PNG) 
 	
