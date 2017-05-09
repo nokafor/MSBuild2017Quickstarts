@@ -394,7 +394,7 @@ To illustrate that point, we will implement a simple example of how a template c
 
 5. Then, while having the cursor within any 'Contractor' instance, click on the Developer tab and then on 'Properties'. You will see each content control has the 'customer' tag.
 
-	![](https://github.com/OfficeDev/hands-on-labs/blob/master/O3652/O3652-2%20Deep%20Dive%20in%20Office%20Word%20Add-ins/Images/Fig15.png) 
+	![](assets/customer-tag.png) 
 
 6. Close Word and go back to the **Home.js** file in Visual Studio. Make sure you are using the StatementOfWork project.
 
